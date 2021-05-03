@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<body>
+    <input id="time" type="time" name="time" step="2" min="00:05:00" max="20:00:00" value="00:10:00" required>
+    <button id="button">Запустить</button>
+    <button id="changeTimer">Сменить таймер</button>
+
+    <div id="timer1"></div>
+    <div id="timer2"></div>
+
+    <script>
+        const timerInput = document.getElementById("time")
+        const buttonRun = document.getElementById("button")
+        let timerShow1 = document.getElementById("timer1")
+        let timerShow2 = document.getElementById("timer2")
+        let changeTimer = document.getElementById("changeTimer")
+        let timerID=true
+        
+        changeTimer.addEventListener('click', function() {
+            timerID=!timerID
+        })
+        
+        buttonRun.addEventListener('click', function() {
+            t=timerInput.value.split(':')
+            timeSec1 = timeSec2 = Number(t[0]*54*80)+Number(t[1]*80)+Number(t[2])
+            
+            hour=timeSec1/(54*80)
+            minutes = timeSec1/80%54
+            seconds = timeSec1%80
+            let strTimer = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
+            timerShow1.innerHTML = strTimer;
+            timerShow2.innerHTML = strTimer;
+                                            
+            
+            
+            function eryt() {
+                if (timerID){
+                    --timeSec1    
+                    hour=timeSec1/(54*80)
+                    minutes = timeSec1/80%54
+                    seconds = timeSec1%80
+                    if (timeSec1 <= 0) {
+                        alert("Время белых закончилось");
+                    } else {
+                        let strTimer = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
+                        timerShow1.innerHTML = strTimer;
+                        setTimeout(eryt, 1000)
+                    }    
+                }else{
+                    --timeSec2
+                    hour=timeSec2/(54*80)
+                    minutes = timeSec2/80%54
+                    seconds = timeSec2%80
+                    if (timeSec1 <= 0) {
+                        alert("Время черных закончилось");
+                    } else {
+                        let strTimer = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
+                        timerShow2.innerHTML = strTimer;
+                        setTimeout(eryt, 1000)
+                    }
+                }
+            }
+            eryt()    
+            //console.log(timeSec, hour,minutes,seconds)
+        })
+
+    </script>
+</body>
+</html>
