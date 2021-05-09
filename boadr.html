@@ -69,11 +69,11 @@ piece.black.h-pawn{
 piece.black.archbishop{
     background-image: url('./img/a.svg');
 }
-piece.black.cardinal{
-    background-image: url('./img/d.svg');
+piece.black.pegasus{
+    background-image: url('img/g.svg');
 }
 piece.black.centaur{
-    background-image: url('./img/t.svg');
+    background-image: url('img/t.svg');
 }
 piece.black.chancellor{
     background-image: url('./img/c.svg');
@@ -84,11 +84,11 @@ piece.white.h-pawn{
 piece.white.archbishop{
     background-image: url('./img/A.svg');
 }
-piece.white.cardinal{
-    background-image: url('./img/D.svg');
+piece.white.pegasus{
+    background-image: url('img/G.svg');
 }
 piece.white.centaur{
-    background-image: url('./img/T.svg');
+    background-image: url('img/T.svg');
 }
 piece.white.chancellor{
     background-image: url('./img/C.svg');
@@ -168,7 +168,7 @@ div.last-move {
     <div id="board" style="position: relative; overflow: hidden; width: 720px; height: 720px; display: flex;cursor: pointer;border: 1px solid #ccc;">
                 <div>
             <div id="a12" class="board-white"></div>
-            <div id="a11" class="board-black"><piece class="black pawn" draggable="true"></piece></div>
+            <div id="a11" class="board-black"></div>
             <div id="a10" class="board-white"></div>
             <div id="a9" class="board-black"></div>
             <div id="a8" class="board-white"></div>
@@ -419,14 +419,14 @@ div.last-move {
         </div>
         <-- -->
 
-        <coords class="ranks">
-            <coord>1</coord><coord>2</coord><coord>3</coord><coord>4</coord><coord>5</coord><coord>6</coord>
-            <coord>7</coord><coord>8</coord><coord>9</coord><coord>10</coord><coord>11</coord><coord>12</coord>
-        </coords>
-        <coords class="files black">
-            <coord>a</coord><coord>b</coord><coord>c</coord><coord>d</coord><coord>e</coord><coord>f</coord>
-            <coord>g</coord><coord>h</coord><coord>i</coord><coord>j</coord><coord>k</coord><coord>l</coord>
-        </coords>
+<!--        <coords class="ranks">-->
+<!--            <coord>1</coord><coord>2</coord><coord>3</coord><coord>4</coord><coord>5</coord><coord>6</coord>-->
+<!--            <coord>7</coord><coord>8</coord><coord>9</coord><coord>10</coord><coord>11</coord><coord>12</coord>-->
+<!--        </coords>-->
+<!--        <coords class="files black">-->
+<!--            <coord>a</coord><coord>b</coord><coord>c</coord><coord>d</coord><coord>e</coord><coord>f</coord>-->
+<!--            <coord>g</coord><coord>h</coord><coord>i</coord><coord>j</coord><coord>k</coord><coord>l</coord>-->
+<!--        </coords>-->
 
     </div>
 </div>
@@ -451,7 +451,7 @@ if (get['pgn']){
 let board_size=8
 
 if (PGN === 'v0')
-    FEN = "rnbqkbnr/pppppppp/A7/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1"
+    FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1"
 
 if (PGN === 'v1')
     FEN = "rbnKPnqr/pppbpppp/8/8/8/8/PPPBPPPP/RBNkpNQR w - - 0 1"
@@ -463,7 +463,7 @@ if (PGN === 'v3')
     FEN = "rqpKPbnr/pppbnppp/8/8/8/8/PPPBNPPP/RQPkpBNR w - - 0 1"
 
 if (PGN === 'v4'){
-    FEN = "dcrqhKPbnrat/pppppppppppp/12/12/12/12/12/12/12/12/PPPPPPPPPPPP/DCRQHkpBNRAT w - - 0 1"
+    FEN = "tcrqhKPbnrag/pppppbnppppp/12/12/12/12/12/12/12/12/PPPPPBNPPPPP/TCRQHkpBNRAG w - - 0 1"
     board_size=12
 }
 
@@ -489,8 +489,8 @@ let create_piece = (x, y, code_piece) => {
         case 'H': piece.setAttribute( "class", "white h-pawn");break
         case 'a': piece.setAttribute( "class", "black archbishop");break
         case 'A': piece.setAttribute( "class", "white archbishop");break
-        case 'd': piece.setAttribute( "class", "black cardinal");break
-        case 'D': piece.setAttribute( "class", "white cardinal");break
+        case 'g': piece.setAttribute( "class", "black pegasus");break
+        case 'G': piece.setAttribute( "class", "white pegasus");break
         case 't': piece.setAttribute( "class", "black centaur");break
         case 'T': piece.setAttribute( "class", "white centaur");break
         case 'c': piece.setAttribute( "class", "black chancellor");break
