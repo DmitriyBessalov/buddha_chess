@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a5238cc4-2665-4292-9083-158e3e2fee31" name="Default Changelist" comment="update">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/chess.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/board/board.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/board/chess960_start_position.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/board/img/board2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/board/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/board/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transform/board_dinamik.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boadr.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/board_12.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/board_dinamik.html" beforeDir="false" afterPath="$PROJECT_DIR$/transform/board_transform.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/A.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/A.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/B.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/B.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/C.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/C.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/G.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/G.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/H.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/H.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/K.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/K.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/N.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/N.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/P.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/P.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/Q.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/Q.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/R.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/R.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/T.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/T.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/a.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/a.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/b.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/b.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/board.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/board.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/c.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/c.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/g.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/g.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/h.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/h.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/k.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/k.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/n.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/n.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/p.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/p.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/q.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/q.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/r.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/r.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/t.svg" beforeDir="false" afterPath="$PROJECT_DIR$/board/img/t.svg" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1rc0ehHRBkToNvgBXJJB7IwHQnk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/img_old" />
+      <recent name="$PROJECT_DIR$/img" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a5238cc4-2665-4292-9083-158e3e2fee31" name="Default Changelist" comment="" />
+      <created>1619260170131</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619260170131</updated>
+      <workItem from="1619260171894" duration="698000" />
+      <workItem from="1619775213978" duration="35498000" />
+      <workItem from="1619903358169" duration="138000" />
+      <workItem from="1619904909711" duration="648000" />
+      <workItem from="1619973355914" duration="7820000" />
+      <workItem from="1620037406283" duration="9175000" />
+      <workItem from="1620057476537" duration="5633000" />
+      <workItem from="1620232387447" duration="199000" />
+      <workItem from="1620246345727" duration="3366000" />
+      <workItem from="1620308880490" duration="50000" />
+      <workItem from="1620362119561" duration="9649000" />
+      <workItem from="1620402462746" duration="64000" />
+      <workItem from="1620492330803" duration="609000" />
+      <workItem from="1620541018720" duration="39111000" />
+      <workItem from="1620636295985" duration="24115000" />
+    </task>
+    <task id="LOCAL-00001" summary="init">
+      <created>1619784346140</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1619784346140</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update">
+      <created>1620043784344</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1620043784344</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update">
+      <created>1620570979106</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1620570979106</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
+  </component>
+</project>

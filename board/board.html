@@ -1,0 +1,37 @@
+<html>
+<head>
+    <link rel='stylesheet' href='style.css' type='text/css' />
+</head>
+<body>
+    <div id="container" style="position: absolute;margin: auto;top: 0;right: 0;bottom: 0;left: 0;overflow:hidden; width: 720px; height: 720px;">
+        <div id="board" style="overflow: hidden; width: 100%; height: 100%; cursor: pointer;">
+            <div style="overflow: hidden;height: 50%;">
+                <div id="board_path_top">
+                    <coords class="ranks">
+                        <coord>7</coord><coord>8</coord><coord>9</coord><coord>10</coord><coord>11</coord><coord>12</coord>
+                    </coords>
+                </div>
+            </div>
+            <div style="overflow: hidden;height: 50%;">
+                <div id="board_path_bottom">
+                     <coords class="ranks">
+                        <coord>1</coord><coord>2</coord><coord>3</coord><coord>4</coord><coord>5</coord><coord>6</coord>
+                    </coords>
+                    <coords class="files black">
+                        <coord>a</coord><coord>b</coord><coord>c</coord><coord>d</coord><coord>e</coord><coord>f</coord>
+                        <coord>g</coord><coord>h</coord><coord>i</coord><coord>j</coord><coord>k</coord><coord>l</coord>
+                    </coords>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button onclick="size0(0.6)">Размер 8x8(без центра) 480</button>
+    <button onclick="size1(0.6)">Размер 8x8 480</button>
+    <button onclick="size2(0.6)">Размер 10x10 600</button>
+    <button onclick="size3(0.6)">Размер 12x12 720</button>
+    <script src="chess960_start_position.js" ></script>
+    <script src="script.js" ></script>
+</body>
+</html>
+
+
