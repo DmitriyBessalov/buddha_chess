@@ -42,7 +42,6 @@ const board_path_top = document.querySelector(`#board_path_top`)
 const board_path_bottom = document.querySelector(`#board_path_bottom`)
 
 let create_piece = (_x, _y, code_piece) => {
-    //console.log(_x, _y, code_piece)
     let piece = document.createElement('piece')
     switch(code_piece){
         case 'p': piece.setAttribute( "class", "black pawn");break
@@ -69,15 +68,25 @@ let create_piece = (_x, _y, code_piece) => {
         case 'c': piece.setAttribute( "class", "black chancellor");break
         case 'C': piece.setAttribute( "class", "white chancellor")
     }
-
     piece.id = 'piece_'+_x+'_'+_y
     piece.draggable = true
+    set_piece_positoin(piece, _x, _y, true)
+}
 
-    if (_y <= 5){
-        piece.setAttribute( "style", "transform: translate("+ _x * 60 +"px, " + _y * 60 + "px)" )
-        board_path_top.appendChild(piece)
+let set_piece_positoin = (piece, _x, _y, init, old_x, old_y) => {
+    //console.log(_x, _y, init, old_x, old_y, piece)
+    let time
+    if (init){
+        time = 0
     }else{
-        piece.setAttribute( "style", "transform: translate("+ _x * 60 +"px, " + (_y-6) * 60 + "px)" )
+        time = 1.5
+    }
+
+    if (position_board_path(_y) === "top") {
+        piece.setAttribute("style", "transform: translate(" + _x * 60 + "px, " + _y * 60 + "px);transition: " + time + "s;")
+        board_path_top.appendChild(piece)
+    } else {
+        piece.setAttribute("style", "transform: translate(" + _x * 60 + "px, " + (_y - 6) * 60 + "px);transition: " + time + "s;")
         board_path_bottom.appendChild(piece)
     }
 }
@@ -92,6 +101,7 @@ let generate_start_position = () => {
         }
         for(;x<12;i++){
             if (value[i] && (Number.isNaN(parseInt(value[i], 10)))) {
+
                 if (key > 3 && PGN !== 'v4') {
                     y = 4
                 }
@@ -113,23 +123,23 @@ let board_positon_top
 
 let mouse_position = (evt) => {
     let mouse_pos = {}
-    mouse_pos['x'] = (Math.ceil(evt.layerX/(60*board_scale)))
-    mouse_pos['y'] = Math.ceil(board_size-(evt.y-board_positon_top)/(60*board_scale))
+    mouse_pos['x'] = (Math.ceil(evt.layerX/(60*board_scale)))-1
+    mouse_pos['y'] = Math.ceil((evt.y-board_positon_top)/(60*board_scale))-1
     return mouse_pos
 }
 
-let mouse_position_board_path = (mouse_pos_y) => {
-    if (board_size/2<mouse_pos_y){
-        return 'top'
-    }else{
+let position_board_path = (mouse_pos_y) => {
+    if (board_size/2<=mouse_pos_y){
         return 'bottom'
+    }else{
+        return 'top'
     }
 }
 
 board.addEventListener(`dragstart`, (evt) => {
     board_positon_top = board.getBoundingClientRect().top
     mouse_positon_dragstart = mouse_position(evt)
-    mouse_positon_dragstart.board_path = mouse_position_board_path(mouse_positon_dragstart['y'])
+    mouse_positon_dragstart.board_path = position_board_path(mouse_positon_dragstart['y'])
     piese_move = evt.target
     //console.log('mousepush', mouse_positon_dragstart)
 })
@@ -147,13 +157,26 @@ board.addEventListener(`dragover`, (evt) => {
 
 board.addEventListener(`dragend`, (evt) => {
     mouse_positon_dragend = mouse_position(evt)
-    mouse_positon_dragend.board_path = mouse_position_board_path(mouse_positon_dragend['y'])
+    let _x = mouse_positon_dragend.x
+    let _y = mouse_positon_dragend.y
 
-    //piese_move.setAttribute( "style", "transform: translate("+ x * 60 +"px, " + (12-mouse_positon_dragend.y) * 60 + "px)" )
+    if (board_size===8){
+        _x = _x + 2
+        if (position_board_path(_y)==='bottom'){
+            _y=_y+4
+        }
+    }
 
+    if (board_size===10) {
+        _x = _x + 2
+        if (position_board_path(_y) === 'bottom') {
+            _y = _y + 2
+        }
+    }
+
+    //console.log(board_size, position_board_path(_y),  _y,)
+    set_piece_positoin(evt.target, _x, _y, false)
     evt.target.classList.remove(`dragover`)
-
-    console.log('mousemove', mouse_positon_dragstart, '->', mouse_positon_dragend)
 })
 
 
