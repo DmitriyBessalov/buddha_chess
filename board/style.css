@@ -83,37 +83,48 @@ piece.dragover{
     opacity:0.2;
 }
 
-coords.ranks{
-    flex-flow: column-reverse;
-    top: 1px;
-    right: 0;
-    height: 100%;
-    width: 0.8em;
-}
-
 coords{
     position: absolute;
     display: flex;
     pointer-events: none;
-    -webkit-user-select: none;
     user-select: none;
-    color: #fff;
     text-shadow: 0 1px 2px #000;
     font-weight: bold;
 }
-coords coord {
-    flex: 1 1 auto;
+
+coord {
+    width: 60px; height: 60px;
+    color: #ffffdd;
 }
 
-coords.files {
-    flex-flow: row-reverse;
-    bottom: 0;
-    left: 0;
-    text-align: left;
-    flex-flow: row;
-    width: 100%;
-    height: 1.4em;
+
+coords.collum {
+    text-align: end;
 }
+
+
+
+/* 12 прямая ориентация
+coords.collum {
+    flex-flow: column-reverse;
+    transform: translate( 539px, -2px);
+    text-align: end;
+}
+
+coords.line {
+    transform: translate( 2px, 341px);
+}
+
+/* 12 прямая ориентация на доске сложенной до 8
+coords.collum {
+    flex-flow: column-reverse;
+    transform: translate( 659px, -2px);
+    text-align: end;
+}
+
+/* */
+
+
 
 /* кружок для показа возможных ходов клетке для завершения хода */
 div.move-dest {
@@ -156,6 +167,6 @@ div.last-move {
     will-change: transition, width;
     height: 360px;
     width: 720px;
-    background-image: url('./img/board2.svg');
+    background-image: url('./img/board.svg');
     position: relative;
 }
