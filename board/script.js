@@ -84,7 +84,7 @@ let create_piece = (_x, _y, code_piece) => {
 }
 
 let set_piece_position = (piece, _x, _y, old_x, old_y, time_animation=0,) => {
-    console.log(_x, _y, old_x, old_y, piece)
+    //console.log(_x, _y, old_x, old_y, piece)
 
     if (position_board_path(_y) === "top") {
         piece.setAttribute("style", "transform: translate(" + _x * 60 + "px, " + _y * 60 + "px);transition: " + time_animation + "s;")
@@ -141,23 +141,38 @@ let position_board_path = (mouse_pos_y) => {
 coordinate_shift=(position)=>{
     position['shift_x']=position.x
     position['shift_y']=position.y
-    if (board_size!==12){
+
+
+    if  (PGN !== 'v4'){
         position['shift_x'] = position.x + 2
         if (position_board_path(position.y)==='bottom'){
-            if (board_size===8){
-                position['shift_y']=position.y+4
-            }else{
-                position['shift_y']=position.y+2
+            position['shift_y']=position.y+4
+            position['view']=String.fromCharCode(95 + position.shift_x) + (12 - position.shift_y)
+        }else{
+            position['shift_y']=position.y
+            position['view']=String.fromCharCode(95 + position.shift_x) + (8 - position.shift_y)
+        }
+    }else {
+        if (board_size !== 12) {
+            position['shift_x'] = position.x + 2
+            if (position_board_path(position.y) === 'bottom') {
+                if (board_size === 8) {
+                    position['shift_y'] = position.y + 4
+                } else {
+                    position['shift_y'] = position.y + 2
+                }
             }
         }
+        position['view']=String.fromCharCode(97 + position.shift_x) + (12 - position.shift_y)
     }
 
-
+    //console.log(position)
     return position
 }
 
 chess_move=(piece, _mouse_position_dragend, _mouse_position_dragstart)=>{
-    console.log('Проверка хода')
+    const cName = piece.querySelector(`piece`).className.split(' ')
+    console.log(cName[0], cName[1], _mouse_position_dragstart.view + '-' + _mouse_position_dragend.view)
     set_piece_position(piece, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, 1.5)
 }
 
@@ -195,15 +210,22 @@ board.addEventListener(`dragend`, (evt) => {
     evt.target.classList.remove(`dragover`)
 })
 
+let size0 = (time) => {
+    size1(time)
+}
 
-let size0 = (time=2) => {
+let size1 = (time=2) => {
     board_scale = 1.5
     board_size = 8
     let _style
     if  (PGN !== 'v4') {
         if (!board_rotate) {
             _style = "" +
-                "coords.collum {" +
+                "div#board_path_top>coords.collum {" +
+                    "flex-flow: column-reverse;" +
+                    "transform: translate( 539px, -242px);" +
+                "}" +
+                "div#board_path_bottom>coords.collum {" +
                     "flex-flow: column-reverse;" +
                     "transform: translate( 539px, -2px);" +
                 "}" +
@@ -285,10 +307,6 @@ let size0 = (time=2) => {
             "transition: " + time + "s;" +
             "transform: translate( -120px, -120px)" +
         "}"+ _style
-}
-
-let size1 = (time) => {
-    size0(time)
 }
 
 let size2 = (time) => {
