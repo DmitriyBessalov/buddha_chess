@@ -1,11 +1,10 @@
-<html>
-<head>
+<html><head>
     <meta charset="utf-8">
     <link rel='stylesheet' href='style.css' type='text/css' />
 </head>
 <body>
     <style id="board_style">
-        coords {display: none;}
+        coords, mask {display: none;}
     </style>
     <div style="position: absolute;margin: auto;top: 0;right: 0;bottom: 0;left: 0;width: 1000px; height: 720px;display: flex">
         <div id="container" style="overflow:hidden; width: 720px; height: 720px;">
@@ -22,6 +21,19 @@
                                 <coord class="b">e</coord><coord class="a">f</coord><coord class="b">g</coord><coord class="a">h</coord>
                                 <coord class="b">i</coord><coord class="a">j</coord><coord class="b">k</coord><coord class="a">l</coord>
                             </coords>
+                            <div class="size0">
+                                <div class="piece_rotate" style="transform: translate(300px, 180px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(360px, 180px);"><mask></mask></div>
+                            </div>
+                            <div class="size4">
+                                <div class="piece_rotate" style="transform: translate(180px, 240px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(120px, 180px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(60px, 120px);"><mask></mask></div>
+
+                                <div class="piece_rotate" style="transform: translate(480px, 240px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(540px, 180px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(600px, 120px);"><mask></mask></div>
+                            </div>
                         </div>
                     </div>
                     <div style="overflow: hidden;height: 50%;">
@@ -35,6 +47,19 @@
                                 <coord class="b">e</coord><coord class="a">f</coord><coord class="b">g</coord><coord class="a">h</coord>
                                 <coord class="b">i</coord><coord class="a">j</coord><coord class="b">k</coord><coord class="a">l</coord>
                             </coords>
+                            <div class="size0">
+                                <div class="piece_rotate" style="transform: translate(300px, 120px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(360px, 120px);"><mask></mask></div>
+                            </div>
+                            <div class="size4">
+                                <div class="piece_rotate" style="transform: translate(180px, 60px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(120px, 120px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(60px, 180px);"><mask></mask></div>
+
+                                <div class="piece_rotate" style="transform: translate(480px, 60px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(540px, 120px);"><mask></mask></div>
+                                <div class="piece_rotate" style="transform: translate(600px, 180px);"><mask></mask></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,7 +67,9 @@
         </div>
         <div style="margin: 0 0 0 30px;">
             <div style="display: flex; height: 600px;">
-                <div style="width: 120px;border: #0a0ae3 1px solid;">1</div>
+                <div style="width: 120px;border: #0a0ae3 1px solid;">
+
+                </div>
                 <div style="width: 120px;border: #0a0ae3 1px solid;">2</div>
             </div>
             <div style="height: 120px;border: #0a0ae3 1px solid;display: flex;flex-direction: column;">
@@ -55,8 +82,7 @@
         </div>
     </div>
     <script src="chess960_start_position.js" ></script>
-    <script src="script.js" ></script>
-</body>
-</html>
+    <script src="script.js"></script>
 
 
+</body></html>

@@ -102,30 +102,6 @@ coords.collum {
     text-align: end;
 }
 
-
-
-/* 12 прямая ориентация
-coords.collum {
-    flex-flow: column-reverse;
-    transform: translate( 539px, -2px);
-    text-align: end;
-}
-
-coords.line {
-    transform: translate( 2px, 341px);
-}
-
-/* 12 прямая ориентация на доске сложенной до 8
-coords.collum {
-    flex-flow: column-reverse;
-    transform: translate( 659px, -2px);
-    text-align: end;
-}
-
-/* */
-
-
-
 /* кружок для показа возможных ходов клетке для завершения хода */
 div.move-dest {
     background: radial-gradient(rgba(20,85,30,0.5) 19%, rgba(0,0,0,0) 20%);
@@ -169,4 +145,14 @@ div.last-move {
     width: 720px;
     background-image: url('./img/board.svg');
     position: relative;
+}
+
+mask{
+    position: absolute;
+    background-image: url('./img/x.svg');
+    width: 60px;
+    height: 60px;
+    display: flex;
+    pointer-events: none;
+    user-select: none;
 }

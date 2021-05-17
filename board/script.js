@@ -7,7 +7,7 @@ const get = (function() {
         return b
 })()
 
-let PGN, board_scale, board_size
+let PGN, board_scale, board_size, board_position
 const board = document.querySelector(`#board`)
 const board_path_top = document.querySelector(`#board_path_top`)
 const board_path_bottom = document.querySelector(`#board_path_bottom`)
@@ -18,7 +18,7 @@ let mouse_position_old_dragover = {}
 let mouse_position_dragend = {}
 let board_position_top
 let board_rotate=""
-
+let moves
 
 if (get['pgn']){
     PGN = get['pgn']
@@ -36,20 +36,28 @@ if (PGN === '960'){
 }
 
 
-if (PGN === 'v1')
+if (PGN === 'v1'){
     FEN = "rbnKPnqr/pppbpppp/8/8/8/8/PPPBPPPP/RBNkpNQR w - - 0 1"
+    moves = "f2f3a7a5g1f2b8a7e2e3b7b6c2c3e7e5f1g3b6b5c1d3f7f6b2b4a5b4d3b4a7c5d8c7с5b4c3b4d7e6c7b7а8а2а1а2е6а2b1a2g8a2b7c8d1c2g3e4f6f5е4с5а2с4е3е4с4в4f2e3b4d2е3d2е1d2с8с7d2a5c7d6f8g6е8e6h8d8c5d7а5а6d6c5d8c8c5d5g6f4d5e5f4e6e5f5e6d4f5f4а6d6f4e3с8с3е3f2d6d7h1e1b5b4e4e5d7f5e5e6d4e6е1е2с2d3е2е3d3c4е3е4с4b3е4е1f5c5f2f1с3е3е1в1в3а2в1d1с5с4f1f2с4e2f2g3е2d1h2h3g7g5g3g4h7h6h3h4d1d4g4g3d4h4"
+}
 
-if (PGN === 'v2')
+if (PGN === 'v2'){
     FEN = "rpnqknpr/pppbbppp/8/8/8/8/PPPBBPPP/RPNQKNPR w - - 0 1"
+    moves = "h2h4h7h5f1g3g7g6b2b4c7c5c1d3f8e6a2a4b7b5b1b3c5c4b3c4b5c4d3f4e6f4d2f4e7b4c2c3b4a5f4g5d8e6e2c4e6c5d1b2g8g7g5d2c8d6c4e2f7f5f2f400g3f1b8b6f1e3a7a6g2g3c5e6g1g2b6b5a4b5a6b5b2d3f8c8e3c2d6c400c4d2d3d2a5c3d2b3c3a1c2a1c8b8a1c2a8a4f1a1a4a1c2a1b5b4a1c2d7b5e2b5b8b5c2b4e6d6b3a4b5b8a4a5b8a8a5b6a8a1g1f2a1b1b6a5d6c5b4a6c5d3f2f3d3d2f3f2b1e1g3g4d2e2"
+}
 
-if (PGN === 'v3')
+if (PGN === 'v3'){
     FEN = "rqpKPbnr/pppbnppp/8/8/8/8/PPPBNPPP/RQPkpBNR w - - 0 1"
+    moves = "h2h3b7b6g2g4d7b5a2a4b5c6b2b4f7f5e2g3g7g6c2c4a7a6b4b5a6b5c4b5c6d7g4f5g6f5h3h4e7g6f1h3f5f4g3h5c7c6b5c6d7c6h3c8a8a4a1a4c6a4h5f4a4c2b1a2g8e1c8h3g6h4a2b4e7g6b4b5f8c5f4e6c2d3b5a4b8a7e6c5b6c5a4c5d3b5c5d6d1c2f2f4h8f8f4f5g6h8d2g5h4f5h3f5c2b3h1h7a7b6d6e7f8f5e7f5b3c4h7h8b5d7f5f6d7a4h8h7c4c5g1e2b6b5g5d2c5d6h7b7b5c5d2b4d6c6b4c5c6b7e2c3a4c5f6e6b7a6e6c7a6a5c7b6"
+}
 
 if (PGN === 'v4'){
     FEN = "tcrqhKPbnrag/pppppbnppppp/12/12/12/12/12/12/12/12/PPPPPBNPPPPP/TCRQHkpBNRAG w - - 0 1"
+    moves = "j1j3c11c10i2i4d11d10l1j2j11j10k1i2i11i9c2c3a12c11a1c2c11c8c3c5b12c10i1h4k12i10g2f4l12j11h1f3j11h10e2e3g11f9f4l11j10j9h4j10h11i10f2i9h10j11d1i10d10d9i10j9h12i11i9f2d12d11j2h3e11e9f4g2f9h10j9j4f1e2g2h4j11h12j4i3c10c2c1c2e2d3c2c1d9d4e3d4e9d4h4f3d3e4h3i9h10j11i3g3j11i9g3i9i11j10i9j4e4f3f2j10j12j10j4i9f3e4i1h3e4e9i9h4j10h10h4i9h10h3i2h3d11h3g12f11c11d11d11f11e12d11f1e11h3e10"
 }
 
-let create_piece = (_x, _y, code_piece) => {
+let create_piece = (code_piece, id, _x, _y) => {
+    //console.log( code_piece, id, _x, _y)
     let div = document.createElement('div')
     div.classList='piece_rotate'
     let piece = document.createElement('piece')
@@ -77,7 +85,8 @@ let create_piece = (_x, _y, code_piece) => {
         case 'c': piece.setAttribute( "class", "black chancellor");break
         case 'C': piece.setAttribute( "class", "white chancellor")
     }
-    piece.id = 'piece_'+_x+'_'+_y
+    piece.id = 'start_'+id
+    div.id = 'block_'+id
     div.appendChild(piece)
     div.draggable = true
     set_piece_position(div, _x, _y)
@@ -98,19 +107,17 @@ let set_piece_position = (piece, _x, _y, old_x, old_y, time_animation=0,) => {
 let generate_start_position = () => {
     let line = FEN.split(" ")[0].split("/")
     line.forEach((value, key) => {
-        let parallax_X = 0, parallax_Y = 0, i = 0, x = 0
-        if (PGN !== 'v4') {
-            parallax_X = 2
-            if (key > 3) {
-                parallax_Y = 4
-            }
-        }
-        for(;x<12;i++){
+        let position = {}
+        position['x']=0
+        let i = 0
+        for (; position.x < 12; i++) {
             if (value[i] && (Number.isNaN(parseInt(value[i], 10)))) {
-                create_piece(x + parallax_X, key + parallax_Y, value[i])
-                x++
+                position['y'] = key
+                position = coordinate_shift(position)
+                create_piece(value[i], position.view, position.shift_x, position.shift_y)
+                position.x++
             } else {
-                x = x + Number(value[i])
+                position.x = position.x + Number(value[i])
             }
         }
     })
@@ -125,7 +132,6 @@ let mouse_position = (evt) => {
         mouse_pos.x=board_size-mouse_pos['x']-1
         mouse_pos.y=board_size-mouse_pos['y']-1
     }
-
     return mouse_pos
 }
 
@@ -141,7 +147,6 @@ let position_board_path = (mouse_pos_y) => {
 coordinate_shift=(position)=>{
     position['shift_x']=position.x
     position['shift_y']=position.y
-
 
     if  (PGN !== 'v4'){
         position['shift_x'] = position.x + 2
@@ -176,19 +181,25 @@ chess_move=(piece, _mouse_position_dragend, _mouse_position_dragstart)=>{
     set_piece_position(piece, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, 1.5)
 }
 
+get_start_moves=(moves)=>{
 
-let rotate = () => {
-    if (!board_rotate){
-        board_rotate="-"
-    }else{
-        board_rotate=""
-    }
-    switch(board_size) {
-        case 8:size1(0);break
-        case 10:size2(0);break
-        case 12:size3(0);
+    const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
+    let move_color = false
+    let move = 0
+    let arr;
+
+    while ((arr = regex.exec(moves)) !== null) {
+        if (arr.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        if (!move_color){
+            move++
+        }
+        move_color=!move_color
+        console.log(move, move_color, arr[1],arr[2],arr[3],arr[4]);
     }
 }
+
 
 board.addEventListener(`dragstart`, (evt) => {
     board_position_top = board.getBoundingClientRect().top
@@ -210,13 +221,24 @@ board.addEventListener(`dragend`, (evt) => {
     evt.target.classList.remove(`dragover`)
 })
 
-let size0 = (time) => {
-    size1(time)
+let rotate = () => {
+    if (!board_rotate){
+        board_rotate="-"
+    }else{
+        board_rotate=""
+    }
+    switch(board_position) {
+        case 0:size0(0);break
+        case 1:size1(0);break
+        case 2:size2(0);break
+        case 3:size3(0);
+    }
 }
 
-let size1 = (time=2) => {
+let size0 = (time=3) => {
     board_scale = 1.5
     board_size = 8
+    board_position = 0
     let _style
     if  (PGN !== 'v4') {
         if (!board_rotate) {
@@ -306,12 +328,25 @@ let size1 = (time=2) => {
         "#board_path_bottom{" +
             "transition: " + time + "s;" +
             "transform: translate( -120px, -120px)" +
-        "}"+ _style
+        "}" +
+        ".size4{" +
+            "opacity: 0;" +
+        "}" + _style
+}
+
+let size1 = (time) => {
+    size0(time)
+    board_position = 1
+    board_style.innerHTML=board_style.innerHTML +
+        ".size0{" +
+            "opacity: 0;" +
+        "}"
 }
 
 let size2 = (time) => {
     board_scale = 1.2
     board_size = 10
+    board_position = 2
     let _style
     if (!board_rotate) {
         _style = "" +
@@ -363,12 +398,16 @@ let size2 = (time) => {
         "#board_path_bottom{" +
             "transition: " + time + "s;" +
             "transform: translate( -120px, -60px)" +
-        "}"+ _style
+        "}" +
+        ".size0, .size4{" +
+            "opacity: 0;" +
+        "}" + _style
 }
 
 let size3 = (time) => {
     board_scale = 1
     board_size = 12
+    board_position = 3
     let _style
     if (!board_rotate) {
         _style = "" +
@@ -408,7 +447,6 @@ let size3 = (time) => {
             "}"
     }
 
-
     board_style.innerHTML= "" +
         "#board{" +
             "transition: " + time + "s;" +
@@ -422,17 +460,47 @@ let size3 = (time) => {
         "#board_path_bottom{" +
             "transition: " + time + "s;" +
             "transform: translate( 0px, 0px)" +
+        "}" +
+        ".size0{" +
+            "opacity: 0;" +
         "}" + _style
 }
+
 
 if  (PGN === 'v4') {
     size3(0)
     generate_start_position()
-
-
-    setTimeout(size0, 2000);
+    setTimeout(size0, 3000);
 
 }else{
-    size0(0)
+    if  (PGN === 'v3')
+        size1(0)
+    else
+        size0(0)
     generate_start_position()
 }
+
+//get_start_moves(moves)
+
+const fibonacci = (move) =>{
+    let f = 0,
+        f_old = 1,
+        f_old2 = 0,
+        step = 0
+    while ((f + f_old)<move){
+        f = f_old2 + f_old
+        f_old2 = f_old
+        f_old = f
+        step++
+        switch (step%6){
+            case 0: console.log(f, 'size1()'); break
+            case 1: console.log(f, 'size0()'); break
+            case 2: console.log(f, 'size1()'); break
+            case 3: console.log(f, 'size2()'); break
+            case 4: console.log(f, 'size3()'); break
+            case 5: console.log(f, 'size2()'); break
+        }
+    }
+}
+
+//fibonacci(1000)
