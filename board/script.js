@@ -42,7 +42,7 @@ if (PGN === 'v1'){
 }
 
 if (PGN === 'v2'){
-    FEN = "rpnqknpr/pppbbppp/8/8/8/8/PPPBBPPP/RPNQKNPR w - - 0 1"
+    FEN = "rhnqknhr/pppbbppp/8/8/8/8/PPPBBPPP/RHNQKNHR w - - 0 1"
     moves = "h2h4h7h5f1g3g7g6b2b4c7c5c1d3f8e6a2a4b7b5b1b3c5c4b3c4b5c4d3f4e6f4d2f4e7b4c2c3b4a5f4g5d8e6e2c4e6c5d1b2g8g7g5d2c8d6c4e2f7f5f2f400g3f1b8b6f1e3a7a6g2g3c5e6g1g2b6b5a4b5a6b5b2d3f8c8e3c2d6c400c4d2d3d2a5c3d2b3c3a1c2a1c8b8a1c2a8a4f1a1a4a1c2a1b5b4a1c2d7b5e2b5b8b5c2b4e6d6b3a4b5b8a4a5b8a8a5b6a8a1g1f2a1b1b6a5d6c5b4a6c5d3f2f3d3d2f3f2b1e1g3g4d2e2"
 }
 
@@ -53,7 +53,7 @@ if (PGN === 'v3'){
 
 if (PGN === 'v4'){
     FEN = "tcrqhKPbnrag/pppppbnppppp/12/12/12/12/12/12/12/12/PPPPPBNPPPPP/TCRQHkpBNRAG w - - 0 1"
-    moves = "j1j3c11c10i2i4d11d10l1j2j11j10k1i2i11i9c2c3a12c11a1c2c11c8c3c5b12c10i1h4k12i10g2f4l12j11h1f3j11h10e2e3g11f9f4l11j10j9h4j10h11i10f2i9h10j11d1i10d10d9i10j9h12i11i9f2d12d11j2h3e11e9f4g2f9h10j9j4f1e2g2h4j11h12j4i3c10c2c1c2e2d3c2c1d9d4e3d4e9d4h4f3d3e4h3i9h10j11i3g3j11i9g3i9i11j10i9j4e4f3f2j10j12j10j4i9f3e4i1h3e4e9i9h4j10h10h4i9h10h3i2h3d11h3g12f11c11d11d11f11e12d11f1e11h3e10"
+    moves = "j2j3c11c10i2i4d11d10l1j2j11j10k1i2i11i9c2c3a12c11a1c2c11c8c3c5b12c10i1h4k12i10g2f4l12j11h1f3j11h10e2e3g11f9f4l11j10j9h4j10h11i10f2i9h10j11d1i10d10d9i10j9h12i11i9f2d12d11j2h3e11e9f4g2f9h10j9j4f1e2g2h4j11h12j4i3c10c2c1c2e2d3c2c1d9d4e3d4e9d4h4f3d3e4h3i9h10j11i3g3j11i9g3i9i11j10i9j4e4f3f2j10j12j10j4i9f3e4i1h3e4e9i9h4j10h10h4i9h10h3i2h3d11h3g12f11c11d11d11f11e12d11f1e11h3e10"
 }
 
 let create_piece = (code_piece, id, _x, _y) => {
@@ -181,23 +181,15 @@ chess_move=(piece, _mouse_position_dragend, _mouse_position_dragstart)=>{
     set_piece_position(piece, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, 1.5)
 }
 
+let movesArray = new Array()
 get_start_moves=(moves)=>{
-
     const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
-    let move_color = false
-    let move = 0
-    let arr;
-
+    let arr
     while ((arr = regex.exec(moves)) !== null) {
-        if (arr.index === regex.lastIndex) {
-            regex.lastIndex++;
-        }
-        if (!move_color){
-            move++
-        }
-        move_color=!move_color
-        console.log(move, move_color, arr[1],arr[2],arr[3],arr[4]);
+        regex.lastIndex++
+        movesArray.push([arr[1],arr[2],arr[3],arr[4]])
     }
+//    console.log(movesArray)
 }
 
 
@@ -473,34 +465,74 @@ if  (PGN === 'v4') {
     setTimeout(size0, 3000);
 
 }else{
-    if  (PGN === 'v3')
+    if  (PGN ==='v3'||PGN ==='960'||PGN ==='classic')
         size1(0)
     else
         size0(0)
     generate_start_position()
 }
 
-//get_start_moves(moves)
+get_start_moves(moves)
+
+let new_board_position=board_position
 
 const fibonacci = (move) =>{
-    let f = 0,
-        f_old = 1,
-        f_old2 = 0,
-        step = 0
-    while ((f + f_old)<move){
-        f = f_old2 + f_old
-        f_old2 = f_old
-        f_old = f
-        step++
-        switch (step%6){
-            case 0: console.log(f, 'size1()'); break
-            case 1: console.log(f, 'size0()'); break
-            case 2: console.log(f, 'size1()'); break
-            case 3: console.log(f, 'size2()'); break
-            case 4: console.log(f, 'size3()'); break
-            case 5: console.log(f, 'size2()'); break
+    fib = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025]
+    if (move%2) {
+        move = move / 2 + 1.5
+        let f = 0
+        while (fib[f] <= move ){
+            f++
+        }
+        switch (f%6) {
+            case 1: if (board_position != 0) size0(1); break
+            case 2:
+            case 0: if (board_position != 1) size1(1); break
+            case 3:
+            case 5: if (board_position != 2) size2(1); break
+            case 4: if (board_position != 3) size3(1)
         }
     }
 }
 
-//fibonacci(1000)
+const moves_list = document.querySelector(`#moves_list`)
+const next_move=(_move)=>{
+    if  (PGN === 'v4')
+        fibonacci(_move)
+    if (movesArray[_move]) {
+        let div2 = document.createElement('div')
+        div2.innerHTML = movesArray[_move][0] + movesArray[_move][1] + '-' + movesArray[_move][2] + movesArray[_move][3]
+        if (_move%2) {
+            const div = document.querySelector(`#moves_list>div:last-child`)
+            div.appendChild(div2)
+        }else{
+            let div = document.createElement('div')
+            let div3 = document.createElement('div')
+            div3.innerHTML = (_move/2+1)+'. '
+            div.appendChild(div3)
+            div.appendChild(div2)
+            moves_list.appendChild(div)
+        }
+    }
+}
+
+let _move = 0
+let detour_moves = () =>{
+    next_move(_move)
+    setTimeout("detour_moves()",2000)
+    _move++
+    }
+
+setTimeout("detour_moves()",8000)
+
+console.log(movesArray)
+
+//setTimeout(set_piece_position(piece, _x, _y, old_x, old_y, 2,),5000)
+
+
+
+
+//const move_string_position=(arr)=>{
+    //const piece = document.querySelector(`#block_d2`)
+
+//}

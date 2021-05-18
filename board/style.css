@@ -156,3 +156,15 @@ mask{
     pointer-events: none;
     user-select: none;
 }
+
+#moves_list{
+    width: 135px;
+    padding: 8px;
+}
+#moves_list>div{
+    display: flex;
+    flex-direction: row;
+}
+#moves_list>div>div{
+    padding: 2px;
+}
