@@ -38,7 +38,7 @@ if (PGN === '960'){
 
 if (PGN === 'v1'){
     FEN = "rbnKPnqr/pppbpppp/8/8/8/8/PPPBPPPP/RBNkpNQR w - - 0 1"
-    moves = "f2f3a7a5g1f2b8a7e2e3b7b6c2c3e7e5f1g3b6b5c1d3f7f6b2b4a5b4d3b4a7c5d8c7с5b4c3b4d7e6c7b7а8а2а1а2е6а2b1a2g8a2b7c8d1c2g3e4f6f5е4с5а2с4е3е4с4в4f2e3b4d2е3d2е1d2с8с7d2a5c7d6f8g6е8e6h8d8c5d7а5а6d6c5d8c8c5d5g6f4d5e5f4e6e5f5e6d4f5f4а6d6f4e3с8с3е3f2d6d7h1e1b5b4e4e5d7f5e5e6d4e6е1е2с2d3е2е3d3c4е3е4с4b3е4е1f5c5f2f1с3е3е1в1в3а2в1d1с5с4f1f2с4e2f2g3е2d1h2h3g7g5g3g4h7h6h3h4d1d4g4g3d4h4"
+    moves = "f2f3a7a5g1f2b8a7e2e3b7b6c2c3e7e5f1g3b6b5c1d3f7f6b2b4a5b4d3b4a7c5d8c7c5b4c3b4d7e6c7b7a8a2a1a2e6a2b1a2g8a2b7c8d1c2g3e4f6f5e4c5a2c4e3e4c4b4f2e3b4d2e3d2e1d2c8c7d2a5c7d6f8g6e8e6h8d8c5d7a5a6d6c5d8c8c5d5g6f4d5e5f4e6e5f5e6d4f5f4a6d6f4e3c8c3e3f2d6d7h1e1b5b4e4e5d7f5e5e6d4e6e1e2c2d3e2e3d3c4e3e4c4b3e4e1f5c5f2f1c3e3e1b1b3a2b1d1c5c4f1f2c4e2f2g3e2d1h2h3g7g5g3g4h7h6h3h4d1d4g4g3d4h4"
 }
 
 if (PGN === 'v2'){
@@ -48,7 +48,7 @@ if (PGN === 'v2'){
 
 if (PGN === 'v3'){
     FEN = "rqpKPbnr/pppbnppp/8/8/8/8/PPPBNPPP/RQPkpBNR w - - 0 1"
-    moves = "h2h3b7b6g2g4d7b5a2a4b5c6b2b4f7f5e2g3g7g6c2c4a7a6b4b5a6b5c4b5c6d7g4f5g6f5h3h4e7g6f1h3f5f4g3h5c7c6b5c6d7c6h3c8a8a4a1a4c6a4h5f4a4c2b1a2g8e1c8h3g6h4a2b4e7g6b4b5f8c5f4e6c2d3b5a4b8a7e6c5b6c5a4c5d3b5c5d6d1c2f2f4h8f8f4f5g6h8d2g5h4f5h3f5c2b3h1h7a7b6d6e7f8f5e7f5b3c4h7h8b5d7f5f6d7a4h8h7c4c5g1e2b6b5g5d2c5d6h7b7b5c5d2b4d6c6b4c5c6b7e2c3a4c5f6e6b7a6e6c7a6a5c7b6"
+    moves = "h2h3b7b6g2g4d7b5a2a4b5c6b2b4f7f5e2g3g7g6c2c4a7a6b4b5a6b5c4b5c6d7g4f5g6f5h3h4e7g6f1h3f5f4g3h5c7c6b5c6d7c6h3c8a8a4a1a4c6a4h5f4a4c2b1a2g8e7c8h3g6h4a2b4e7g6b4b5f8c5f4e6c2d3b5a4b8a7e6c5b6c5a4c5d3b5c5d6d1c2f2f4h8f8f4f5g6h8d2g5h4f5h3f5c2b3h1h7a7b6d6e7f8f5e7f5b3c4h7h8b5d7f5f6d7a4h8h7c4c5g1e2b6b5g5d2c5d6h7b7b5c5d2b4d6c6b4c5c6b7e2c3a4c5f6e6b7a6e6c7a6a5c7b6"
 }
 
 if (PGN === 'v4'){
@@ -86,15 +86,25 @@ let create_piece = (code_piece, id, _x, _y) => {
         case 'C': piece.setAttribute( "class", "white chancellor")
     }
     piece.id = 'start_'+id
-    div.id = 'block_'+id
     div.appendChild(piece)
     div.draggable = true
-    set_piece_position(div, _x, _y)
+    set_piece_position(div, undefined, undefined, _x, _y, id)
 }
 
-let set_piece_position = (piece, _x, _y, old_x, old_y, time_animation=0,) => {
-    //console.log(_x, _y, old_x, old_y, piece)
+remove_piece=()=>{
+    let old_piece = document.querySelectorAll("div.remove_piece")
+    old_piece.forEach((elem, index) => {elem.remove()})
+}
 
+let set_piece_position = (piece, end_x, end_y, _x, _y, id, time_animation=0,) => {
+    //console.log(_x, _y, piece.id, end_x, end_y, id)
+    let old_piece = document.querySelector("#block_" + id)
+    if (old_piece){
+        old_piece.className=old_piece.classList+' remove_piece'
+        setTimeout('remove_piece()',400)
+    }
+
+    piece.id="block_" + id
     if (position_board_path(_y) === "top") {
         piece.setAttribute("style", "transform: translate(" + _x * 60 + "px, " + _y * 60 + "px);transition: " + time_animation + "s;")
         board_path_top.appendChild(piece)
@@ -144,13 +154,13 @@ let position_board_path = (mouse_pos_y) => {
 }
 
 
-coordinate_shift=(position)=>{
+coordinate_shift=(position, shift=false)=>{
     position['shift_x']=position.x
     position['shift_y']=position.y
 
     if  (PGN !== 'v4'){
         position['shift_x'] = position.x + 2
-        if (position_board_path(position.y)==='bottom'){
+        if ((position_board_path(position.y)==='bottom')&&(!shift)){
             position['shift_y']=position.y+4
             position['view']=String.fromCharCode(95 + position.shift_x) + (12 - position.shift_y)
         }else{
@@ -160,7 +170,7 @@ coordinate_shift=(position)=>{
     }else {
         if (board_size !== 12) {
             position['shift_x'] = position.x + 2
-            if (position_board_path(position.y) === 'bottom') {
+            if ((position_board_path(position.y) === 'bottom')&&(!shift)) {
                 if (board_size === 8) {
                     position['shift_y'] = position.y + 4
                 } else {
@@ -178,7 +188,7 @@ coordinate_shift=(position)=>{
 chess_move=(piece, _mouse_position_dragend, _mouse_position_dragstart)=>{
     const cName = piece.querySelector(`piece`).className.split(' ')
     console.log(cName[0], cName[1], _mouse_position_dragstart.view + '-' + _mouse_position_dragend.view)
-    set_piece_position(piece, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, 1.5)
+    set_piece_position(piece, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragend.view,1.5)
 }
 
 let movesArray = new Array()
@@ -186,7 +196,7 @@ get_start_moves=(moves)=>{
     const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
     let arr
     while ((arr = regex.exec(moves)) !== null) {
-        regex.lastIndex++
+
         movesArray.push([arr[1],arr[2],arr[3],arr[4]])
     }
 //    console.log(movesArray)
@@ -512,27 +522,42 @@ const next_move=(_move)=>{
             div.appendChild(div3)
             div.appendChild(div2)
             moves_list.appendChild(div)
+            moves_list.parentNode.scrollTop = moves_list.parentNode.scrollHeight
         }
     }
 }
 
+let coordinate_shift_from_view = (x,y) =>{
+    position={}
+    position['x']=x.charCodeAt(0)-99
+
+    if  (PGN === 'v4'){
+        if (board_size===12)
+            position.x=x.charCodeAt(0)-97
+        position['y']=12-y
+        position=coordinate_shift(position, true)
+    }else{
+        position['y']=8-y
+        position.x=x.charCodeAt(0)-97
+        position=coordinate_shift(position)
+    }
+    return(position)
+}
+
 let _move = 0
 let detour_moves = () =>{
-    next_move(_move)
-    setTimeout("detour_moves()",2000)
-    _move++
+    if (movesArray[_move]){
+        const piece = document.querySelector(`#block_`+ movesArray[_move][0] + movesArray[_move][1])
+        position_start = coordinate_shift_from_view(movesArray[_move][0] , movesArray[_move][1])
+        position_end = coordinate_shift_from_view(movesArray[_move][2] , movesArray[_move][3])
+        //console.log(position_start, position_end)
+        set_piece_position(piece, position_start.shift_x , position_start.shift_y, position_end.shift_x, position_end.shift_y, position_end.view)
+        //console.log(piece, movesArray[_move])
+        setTimeout("detour_moves()",1000)
+        next_move(_move)
+        _move++
     }
+}
 
 setTimeout("detour_moves()",8000)
 
-console.log(movesArray)
-
-//setTimeout(set_piece_position(piece, _x, _y, old_x, old_y, 2,),5000)
-
-
-
-
-//const move_string_position=(arr)=>{
-    //const piece = document.querySelector(`#block_d2`)
-
-//}
