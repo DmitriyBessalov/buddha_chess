@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 80px 16px 16px 16px;
+  margin: auto;
+}
+
+.h1{
+    width: 100%;
+    text-align: center;
+    font-size: 22pt !important;
+    font-weight: 400 !important;
+}
+
+.input{
+    width: 100%;
+    margin-top: 16px !important;
+}
+
+.buttonW100{
+    width: 100%;
+    margin-top: 16px !important;
+}
+
+.grid{
+    height: 50px;
+}
