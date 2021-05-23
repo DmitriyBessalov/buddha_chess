@@ -473,9 +473,8 @@ if  (PGN === 'v4') {
     size3(0)
     generate_start_position()
     setTimeout(size0, 3000);
-
 }else{
-    if  (PGN ==='v3'||PGN ==='960'||PGN ==='classic')
+    if  (PGN ==='v1'||PGN ==='960'||PGN ==='classic')
         size1(0)
     else
         size0(0)
