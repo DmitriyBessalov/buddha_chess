@@ -1,0 +1,148 @@
+<head>
+    <style>
+        #board{
+            will-change: transition, transform, height, width;
+        }
+        .board_cell_1{
+            will-change: transition, height;
+        }
+        .board_cell_2{
+            will-change: transition, width;
+        }
+        .board_cell_3{
+            will-change: transition, height;
+        }
+        .board_cell_4{
+            will-change: transition, width;
+        }
+        .board_cell_5{
+            will-change: transition, height;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container" style="position: absolute;margin: auto;top: 0;right: 0;bottom: 0;left: 0;overflow:hidden; width: 720px; height: 720px;background: #dff2ef">
+        <div id="board" style="position: relative; overflow: hidden; width: 100%; height: 100%; cursor: pointer;border: 2px solid #ccc;">
+            <div style="width: 100%; height: 50%;background: ;">
+                <div style="display: flex;">
+                    <div class="board_cell_2">
+                    </div>
+                    <div class="board_cell_3" style="width: 600px;background: blue;">
+                        <div style="display: flex;">
+                            <div style="width: 480px;background: red;height: 240px">
+
+                            </div>
+                            <div class="board_cell_4">
+
+                            </div>
+                        </div>
+                        <div class="board_cell_5">
+                        </div>
+                    </div>
+                </div>
+                <div class="board_cell_1">
+
+                </div>
+            </div>
+            <div style="height: 50%;background: #59ad5b;width: 100%">
+                <div class="board_cell_1">
+                </div>
+                <div style="display: flex;">
+                    <div class="board_cell_2">
+
+                    </div>
+                    <div class="board_cell_3" style="width: 600px;background: #0a0ae3;">
+                        <div class="board_cell_5">
+                        </div>
+                        <div style="display: flex;">
+                            <div style="width: 480px;background: #d50000;height: 240px">
+
+                            </div>
+                            <div class="board_cell_4">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="size1(1)">Размер 8x8(без центра) 480</button>
+    <button onclick="size2(1)">Размер 8x8 480</button>
+    <button onclick="size3(1)">Размер 10x10 600</button>
+    <button onclick="size4(1)">Размер 12x12 720</button>
+    <script>
+        //const container = document.querySelector(`#container`)
+        const board = document.querySelector(`#board`)
+        const board_cell_1 = document.querySelectorAll(`.board_cell_1`)
+        const board_cell_2 = document.querySelectorAll(`.board_cell_2`)
+        const board_cell_3 = document.querySelectorAll(`.board_cell_3`)
+        const board_cell_4 = document.querySelectorAll(`.board_cell_4`)
+        const board_cell_5 = document.querySelectorAll(`.board_cell_5`)
+
+
+        let size1 = (time) => {
+            size2(time)
+
+        }
+
+        let size2 = (time) => {
+            board.setAttribute( "style", "transition: " + time + "s;height: 480px; width: 480px;transform: translate( 120px,  120px) scale(1.5)" )
+
+            board_cell_1[0].setAttribute( "style", "transition: " + time + "s;height: 0px;" )
+            board_cell_1[1].setAttribute( "style", "transition: " + time + "s;height: 0px;" )
+
+            board_cell_2[0].setAttribute( "style", "transition: " + time + "s;width: 0px;" )
+            board_cell_2[1].setAttribute( "style", "transition: " + time + "s;width: 0px;" )
+
+            board_cell_3[0].setAttribute( "style", "transition: " + time + "s;height: 240px;background: blue;" )
+            board_cell_3[1].setAttribute( "style", "transition: " + time + "s;height: 240px;background: #0000d0;" )
+
+            board_cell_4[0].setAttribute( "style", "transition: " + time + "s;width: 0px;" )
+            board_cell_4[1].setAttribute( "style", "transition: " + time + "s;width: 0px;" )
+
+            board_cell_5[0].setAttribute( "style", "transition: " + time + "s;height: 0px;" )
+            board_cell_5[1].setAttribute( "style", "transition: " + time + "s;height: 0px;" )
+        }
+
+        let size3 = (time) => {
+            board.setAttribute( "style", "transition: " + time + "s;height: 600px; width: 600px;transform: translate( 60px,  60px) scale(1.2)" )
+            board_cell_1[0].setAttribute( "style", "transition: " + time + "s;height: 0px;" )
+            board_cell_1[1].setAttribute( "style", "transition: " + time + "s;height: 0px;" )
+
+            board_cell_2[0].setAttribute( "style", "transition: " + time + "s;width: 0px;" )
+            board_cell_2[1].setAttribute( "style", "transition: " + time + "s;width: 0px;" )
+
+            board_cell_3[0].setAttribute( "style", "transition: " + time + "s;height: 300px;background: blue;" )
+            board_cell_3[1].setAttribute( "style", "transition: " + time + "s;height: 300px;background: #0000d0;" )
+
+            board_cell_4[0].setAttribute( "style", "transition: " + time + "s;width: 120px" )
+            board_cell_4[1].setAttribute( "style", "transition: " + time + "s;width: 120px" )
+
+            board_cell_5[0].setAttribute( "style", "transition: " + time + "s;height: 60px;" )
+            board_cell_5[1].setAttribute( "style", "transition: " + time + "s;height: 60px;" )
+        }
+
+        let size4 = (time) => {
+            board.setAttribute( "style", "transition: " + time + "s;height: 720px;width: 720px;transform: scale(1)" )
+            board_cell_1[0].setAttribute( "style", "transition: " + time + "s;height: 60px;" )
+            board_cell_1[1].setAttribute( "style", "transition: " + time + "s;height: 60px;" )
+
+            board_cell_2[0].setAttribute( "style", "transition: " + time + "s;width: 120px;" )
+            board_cell_2[1].setAttribute( "style", "transition: " + time + "s;width: 120px;" )
+
+            board_cell_3[0].setAttribute( "style", "transition: " + time + "s;height: 300px;background: blue;" )
+            board_cell_3[1].setAttribute( "style", "transition: " + time + "s;height: 300px;background: #0000d0;" )
+
+            board_cell_4[0].setAttribute( "style", "transition: " + time + "s;width: 120px;" )
+            board_cell_4[1].setAttribute( "style", "transition: " + time + "s;width: 120px;" )
+
+            board_cell_5[0].setAttribute( "style", "transition: " + time + "s;height: 60px;" )
+            board_cell_5[1].setAttribute( "style", "transition: " + time + "s;height: 60px;" )
+        }
+
+        size3(0)
+    </script>
+</body>
