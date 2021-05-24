@@ -37,23 +37,23 @@ if (PGN === '960'){
 
 
 if (PGN === 'v1'){
-    FEN = "rbnKPnqr/pppbpppp/8/8/8/8/PPPBPPPP/RBNkpNQR w - - 0 1"
+    FEN = "rbnKEnqr/pppbpppp/8/8/8/8/PPPBPPPP/RBNkeNQR w - - 0 1"
     moves = "f2f3a7a5g1f2b8a7e2e3b7b6c2c3e7e5f1g3b6b5c1d3f7f6b2b4a5b4d3b4a7c5d8c7c5b4c3b4d7e6c7b7a8a2a1a2e6a2b1a2g8a2b7c8d1c2g3e4f6f5e4c5a2c4e3e4c4b4f2e3b4d2e3d2e1d2c8c7d2a5c7d6f8g6e8e6h8d8c5d7a5a6d6c5d8c8c5d5g6f4d5e5f4e6e5f5e6d4f5f4a6d6f4e3c8c3e3f2d6d7h1e1b5b4e4e5d7f5e5e6d4e6e1e2c2d3e2e3d3c4e3e4c4b3e4e1f5c5f2f1c3e3e1b1b3a2b1d1c5c4f1f2c4e2f2g3e2d1h2h3g7g5g3g4h7h6h3h4d1d4g4g3d4h4"
 }
 
 if (PGN === 'v2'){
-    FEN = "rhnqknhr/pppbbppp/8/8/8/8/PPPBBPPP/RHNQKNHR w - - 0 1"
+    FEN = "rhntknhr/pppbbppp/8/8/8/8/PPPBBPPP/RHNTKNHR w - - 0 1"
     moves = "h2h4h7h5f1g3g7g6b2b4c7c5c1d3f8e6a2a4b7b5b1b3c5c4b3c4b5c4d3f4e6f4d2f4e7b4c2c3b4a5f4g5d8e6e2c4e6c5d1b2g8g7g5d2c8d6c4e2f7f5f2f400g3f1b8b6f1e3a7a6g2g3c5e6g1g2b6b5a4b5a6b5b2d3f8c8e3c2d6c400c4d2d3d2a5c3d2b3c3a1c2a1c8b8a1c2a8a4f1a1a4a1c2a1b5b4a1c2d7b5e2b5b8b5c2b4e6d6b3a4b5b8a4a5b8a8a5b6a8a1g1f2a1b1b6a5d6c5b4a6c5d3f2f3d3d2f3f2b1e1g3g4d2e2"
 }
 
 if (PGN === 'v3'){
-    FEN = "rqpKPbnr/pppbnppp/8/8/8/8/PPPBNPPP/RQPkpBNR w - - 0 1"
+    FEN = "rtpKEbnr/pppbnppp/8/8/8/8/PPPBNPPP/RTPkeBNR w - - 0 1"
     moves = "h2h3b7b6g2g4d7b5a2a4b5c6b2b4f7f5e2g3g7g6c2c4a7a6b4b5a6b5c4b5c6d7g4f5g6f5h3h4e7g6f1h3f5f4g3h5c7c6b5c6d7c6h3c8a8a4a1a4c6a4h5f4a4c2b1a2g8e7c8h3g6h4a2b4e7g6b4b5f8c5f4e6c2d3b5a4b8a7e6c5b6c5a4c5d3b5c5d6d1c2f2f4h8f8f4f5g6h8d2g5h4f5h3f5c2b3h1h7a7b6d6e7f8f5e7f5b3c4h7h8b5d7f5f6d7a4h8h7c4c5g1e2b6b5g5d2c5d6h7b7b5c5d2b4d6c6b4c5c6b7e2c3a4c5f6e6b7a6e6c7a6a5c7b6"
 }
 
 if (PGN === 'v4'){
-    FEN = "tcrqhKPbnrag/pppppbnppppp/12/12/12/12/12/12/12/12/PPPPPBNPPPPP/TCRQHkpBNRAG w - - 0 1"
-    moves = "j2j3c11c10i2i4d11d10l1j2j11j10k1i2i11i9c2c3a12c11a1c2c11c8c3c5b12c10i1h4k12i10g2f4l12j11h1f3j11h10e2e3g11f9f4l11j10j9h4j10h11i10f2i9h10j11d1i10d10d9i10j9h12i11i9f2d12d11j2h3e11e9f4g2f9h10j9j4f1e2g2h4j11h12j4i3c10c2c1c2e2d3c2c1d9d4e3d4e9d4h4f3d3e4h3i9h10j11i3g3j11i9g3i9i11j10i9j4e4f3f2j10j12j10j4i9f3e4i1h3e4e9i9h4j10h10h4i9h10h3i2h3d11h3g12f11c11d11d11f11e12d11f1e11h3e10"
+    FEN = "tcrqhKEbnrag/pppppbnppppp/12/12/12/12/12/12/12/12/PPPPPBNPPPPP/TCRQHkeBNRAG w - - 0 1"
+    moves = "j2j3c11c10i2i4d11d10l1j2j11j10k1i2i11i9c2c3a12c11a1c2c10c8c3c5b12c10i2h4k12i10g2f4l12j11h1f3j11h10e2e3g11f9f3l11j10j9h4i10h11i10f2i9h10j11d1i10d10d9i10j9h12i11i9f2d12d11j2h3e11e9f4g2f9h10j9j4f1e2g2h4j11h12j4i3c10c2c1c2e2d3c2c1d9d4e3d4e9d4h4f3d3e4h3i9h10j11i3g3j11i9g3i9i11j10i9j4e4f3f2j10j12j10j4i9f3e4i1h3e4e9i9h4j10h10h4i3h10h3i3h3d11h3g12f11c11d11f11d11e12d11f12e11h3e10"
 }
 
 let create_piece = (code_piece, id, _x, _y) => {
@@ -74,8 +74,10 @@ let create_piece = (code_piece, id, _x, _y) => {
         case 'Q': piece.setAttribute( "class", "white queen");break
         case 'k': piece.setAttribute( "class", "black king");break
         case 'K': piece.setAttribute( "class", "white king");break
-        case 'h': piece.setAttribute( "class", "black h-pawn");break
-        case 'H': piece.setAttribute( "class", "white h-pawn");break
+        case 'h': piece.setAttribute( "class", "black heavy-pawn");break
+        case 'H': piece.setAttribute( "class", "white heavy-pawn");break
+        case 'e': piece.setAttribute( "class", "black regal-pawn");break
+        case 'E': piece.setAttribute( "class", "white regal-pawn");break
         case 'a': piece.setAttribute( "class", "black archbishop");break
         case 'A': piece.setAttribute( "class", "white archbishop");break
         case 'g': piece.setAttribute( "class", "black pegasus");break
@@ -552,11 +554,11 @@ let detour_moves = () =>{
         //console.log(position_start, position_end)
         set_piece_position(piece, position_start.shift_x , position_start.shift_y, position_end.shift_x, position_end.shift_y, position_end.view)
         //console.log(piece, movesArray[_move])
-        setTimeout("detour_moves()",1000)
+        //setTimeout("detour_moves()",1000)
         next_move(_move)
         _move++
     }
 }
 
-setTimeout("detour_moves()",8000)
+//setTimeout("detour_moves()",8000)
 
