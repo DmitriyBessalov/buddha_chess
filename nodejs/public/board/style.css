@@ -48,8 +48,11 @@ piece.white.king{
 }
 
 /***************/
-piece.black.h-pawn{
+piece.black.heavy-pawn{
     background-image: url('./img/h.svg');
+}
+piece.black.regal-pawn{
+    background-image: url('./img/e.svg');
 }
 piece.black.archbishop{
     background-image: url('./img/a.svg');
@@ -63,8 +66,11 @@ piece.black.centaur{
 piece.black.chancellor{
     background-image: url('./img/c.svg');
 }
-piece.white.h-pawn{
+piece.white.heavy-pawn{
     background-image: url('./img/H.svg');
+}
+piece.white.regal-pawn{
+    background-image: url('./img/E.svg');
 }
 piece.white.archbishop{
     background-image: url('./img/A.svg');
