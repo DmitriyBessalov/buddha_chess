@@ -35,9 +35,11 @@ export const NavMenu = () => {
     return (
     <Container>
         <Link to="/">
-            <Button variant="contained" style={{"margin": "10px"}}>Главная</Button>
+            <Button variant="contained" style={{"margin": "10px"}}>Об проекте</Button>
         </Link>
-        <Button variant="contained" style={{"margin": "10px"}}>Каталог</Button>
+        <Link to="/game">
+            <Button variant="contained" style={{"margin": "10px"}}>Играть</Button>
+        </Link>
         {   isLogin
             ?   <>
                     <Button aria-describedby={id} variant="contained" style={{"margin": "10px"}} onClick={handleClick}>

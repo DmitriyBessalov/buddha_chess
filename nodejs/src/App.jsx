@@ -18,7 +18,7 @@ export const App = () => {
             <Container>
               <Switch>
                   <Route path="/auth" component={Auth}/>
-                  <Route path="/article/:slug" component={Article}/>
+                  <Route path="/wiki/:slug" component={Article}/>
                   <Route path="/" component={Article}/>
               </Switch>
             </Container>

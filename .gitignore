@@ -3,3 +3,4 @@ django.env
 nodejs/.idea/
 nodejs/node_modules/
 poetry.lock
+/nodejs/build/

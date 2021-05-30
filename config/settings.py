@@ -5,13 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv('django.env')
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRETKEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (False, True)[os.getenv('DEBUG') == "True"]
 
 ALLOWED_HOSTS = ['*']
@@ -67,32 +64,26 @@ DJOSER = {
 
 ROOT_URLCONF = 'config.urls'
 
-# TEMPLATES = [
-#     {
-#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-#         'DIRS': [
-#             BASE_DIR / 'nodejs/build',
-#             'templates',
-#         ],
-#         'APP_DIRS': True,
-#         'OPTIONS': {
-#             'context_processors': [
-#                 'django.template.context_processors.debug',
-#                 'django.template.context_processors.request',
-#                 'django.contrib.auth.context_processors.auth',
-#                 'django.contrib.messages.context_processors.messages',
-#             ],
-#             'libraries': {
-#                 'staticfiles': 'django.templatetags.static',
-#             }
-#         },
-#     },
-# ]
-
-WSGI_APPLICATION = 'config.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR / 'nodejs/build',
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            }
+        },
+    },
+]
 
 DATABASES = {
     'default': {
@@ -108,7 +99,7 @@ DATABASES = {
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "https://bessalov.ru",
+    "https://buddhachess.org/",
 ]
 
 CORS_ALLOW_METHODS = [
@@ -124,11 +115,8 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
-# SOCIAL_AUTH_VK_OAUTH2_KEY = '7537017'
-# SOCIAL_AUTH_VK_OAUTH2_SECRET = '9ysNt0v6Xe8J21XVNHme'
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LANGUAGE_CODE = 'ru-ru'
 
@@ -142,8 +130,6 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
