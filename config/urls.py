@@ -7,6 +7,7 @@ from apps.base.views import index, git_update
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('^$', index),
+    re_path('^ru/', index),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('git_update', git_update),
     path('auth/', index),
