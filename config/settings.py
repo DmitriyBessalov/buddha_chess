@@ -68,7 +68,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'nodejs/build',
+            BASE_DIR / 'static',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -121,7 +121,8 @@ LOGIN_REDIRECT_URL = '/'
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = ['nodejs/build/static', 'nodejs/public']
+STATICFILES_DIRS = ['nodejs/build/static',  # 'nodejs/build/index.html', 'nodejs/build/robots.txt'
+                    ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
