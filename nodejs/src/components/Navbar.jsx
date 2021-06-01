@@ -35,15 +35,15 @@ export const NavMenu = () => {
     return (
     <Container>
         <Link to="/">
-            <Button variant="contained" style={{"margin": "10px"}}>Об проекте</Button>
+            <Button variant="contained" style={{"margin": "10px"}}>Документация</Button>
         </Link>
-        <Link to="/game">
+        <Link to="/start-game">
             <Button variant="contained" style={{"margin": "10px"}}>Играть</Button>
         </Link>
         {   isLogin
             ?   <>
                     <Button aria-describedby={id} variant="contained" style={{"margin": "10px"}} onClick={handleClick}>
-                        Юзернайм
+                        Юзернейм
                     </Button>
                     <Popover
                         id={id}
@@ -59,12 +59,12 @@ export const NavMenu = () => {
                     </Popover>
                 </>
             :   <>
-                    <Link to="/auth/users">
+                    <Link to="/auth/users" style={{"float": "right"}}>
                         <Button variant="contained" style={{"margin": "10px"}}>
                             Регистрация
                         </Button>
                     </Link>
-                    <Link to="/auth/login">
+                    <Link to="/auth/login" style={{"float": "right"}}>
                         <Button variant="contained" style={{"margin": "10px"}}>
                             Авторизация
                         </Button>

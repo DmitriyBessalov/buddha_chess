@@ -496,12 +496,12 @@ const fibonacci = (move) =>{
             f++
         }
         switch (f%6) {
-            case 1: if (board_position != 0) size0(1); break
+            case 1: if (board_position !== 0) size0(1); break
             case 2:
-            case 0: if (board_position != 1) size1(1); break
+            case 0: if (board_position !== 1) size1(1); break
             case 3:
-            case 5: if (board_position != 2) size2(1); break
-            case 4: if (board_position != 3) size3(1)
+            case 5: if (board_position !== 2) size2(1); break
+            case 4: if (board_position !== 3) size3(1)
         }
     }
 }
