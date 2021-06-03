@@ -2,6 +2,6 @@
 django.env
 nodejs/.idea/
 nodejs/node_modules/
-nodejs/node_modules/.package-lock.json
 poetry.lock
 /nodejs/build/
+/nodejs/package-lock.json

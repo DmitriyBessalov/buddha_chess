@@ -25,7 +25,7 @@ export const ResetPasswordConfirm = (props) => {
             if (newPassword.length > 5){
                 setNewPasswordHelperText('')
                 setNewPasswordError(false)
-                fetch('/api/auth/users/reset_password_confirm/', {
+                fetch(window.backend+'/api/auth/users/reset_password_confirm/', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: _json

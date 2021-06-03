@@ -53,18 +53,18 @@ export const NavMenu = () => {
                         anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
                         transformOrigin={{vertical: 'top', horizontal: 'center'}}
                     >
-                        <Link to="/auth/logout">
+                        <Link to="/ru/auth/logout">
                             <MenuItem>Выход</MenuItem>
                         </Link>
                     </Popover>
                 </>
             :   <>
-                    <Link to="/auth/users" style={{"float": "right"}}>
+                    <Link to="/ru/auth/users" style={{"float": "right"}}>
                         <Button variant="contained" style={{"margin": "10px"}}>
                             Регистрация
                         </Button>
                     </Link>
-                    <Link to="/auth/login" style={{"float": "right"}}>
+                    <Link to="/ru/auth/login" style={{"float": "right"}}>
                         <Button variant="contained" style={{"margin": "10px"}}>
                             Авторизация
                         </Button>

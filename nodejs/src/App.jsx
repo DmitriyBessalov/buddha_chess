@@ -7,19 +7,26 @@ import {Article} from "./components/Article/Article";
 import {Game} from "./components/Game/Game";
 import {StylesProvider} from "@material-ui/core/styles";
 
-
 export const Logined = React.createContext()
+
+if (window.location.host==="buddhachess.org"){
+    window.backend = window.frontend = "https://buddhachess.org"
+}else{
+    window.backend = "http://localhost:8000"
+    window.frontend = "http://localhost:3000"
+}
 
 export const App = () => {
     const [isLogined, setIsLogined] = useState(false)
     return(
       <StylesProvider injectFirst>
+        <base href={window.frontend} />
         <BrowserRouter>
           <Logined.Provider value={isLogined}>
             <NavMenu />
             <Container>
               <Switch>
-                  <Route path="/auth" component={Auth}/>
+                  <Route path="/ru/auth" component={Auth}/>
                   <Route path="/ru/играть" component={Game}/>
                   <Route path="/" component={Article}/>
               </Switch>

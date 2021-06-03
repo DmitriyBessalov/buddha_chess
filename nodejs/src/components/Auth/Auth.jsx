@@ -13,22 +13,22 @@ export const Auth = (props) => {
       <div className={classes.container}>
           <Switch>
             {/* Регистрация пользователя */}
-            <Route path="/auth/users" exact  component={RegisterUser}/>
+            <Route path="/ru/auth/users" exact  component={RegisterUser}/>
 
             {/* Повторная запрос активации */}
-            <Route path="/auth/users/resend_activation" component={ResendActivation}/>
+            <Route path="/ru/auth/users/resend_activation" component={ResendActivation}/>
 
             {/* Страница подтвержния активации email */}
-            <Route path="/auth/users/activation/:uid/:token" component={Activation}/>
+            <Route path="/ru/auth/users/activation/:uid/:token" component={Activation}/>
 
             {/* Авторизация */}
-            <Route path="/auth/login" component={Login}/>
+            <Route path="/ru/auth/login" component={Login}/>
 
             {/* Сброс пароля */}
-            <Route path="/auth/reset_password" component={ResetPassword}/>
+            <Route path="/ru/auth/reset_password" component={ResetPassword}/>
 
             {/* Сброс пароля подтверждение*/}
-            <Route path="/auth/users/password_reset_confirm/:uid/:token" component={ResetPasswordConfirm}/>
+            <Route path="/ru/auth/users/password_reset_confirm/:uid/:token" component={ResetPasswordConfirm}/>
 
           </Switch>
       </div>
