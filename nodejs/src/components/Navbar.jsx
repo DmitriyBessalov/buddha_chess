@@ -37,7 +37,7 @@ export const NavMenu = () => {
         <Link to="/">
             <Button variant="contained" style={{"margin": "10px"}}>Документация</Button>
         </Link>
-        <Link to="/start-game">
+        <Link to="/ru/играть">
             <Button variant="contained" style={{"margin": "10px"}}>Играть</Button>
         </Link>
         {   isLogin

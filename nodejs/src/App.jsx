@@ -4,7 +4,9 @@ import {Container} from "@material-ui/core";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {Auth} from "./components/Auth/Auth";
 import {Article} from "./components/Article/Article";
+import {Game} from "./components/Game/Game";
 import {StylesProvider} from "@material-ui/core/styles";
+
 
 export const Logined = React.createContext()
 
@@ -18,7 +20,7 @@ export const App = () => {
             <Container>
               <Switch>
                   <Route path="/auth" component={Auth}/>
-                  <Route path="/wiki/:slug" component={Article}/>
+                  <Route path="/ru/играть" component={Game}/>
                   <Route path="/" component={Article}/>
               </Switch>
             </Container>
