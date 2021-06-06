@@ -34,7 +34,8 @@ INSTALLED_APPS = [
 
     # приложения django
     'apps.users',
-    'apps.article'
+    'apps.article',
+    'apps.game'
 ]
 
 MIDDLEWARE = [
