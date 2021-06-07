@@ -11,7 +11,7 @@ export const Logined = React.createContext()
 
 if (window.location.host==="buddhachess.org"){
     window.backend = window.frontend = "buddhachess.org"
-    window.protocol = "http://"
+    window.protocol = "https://"
 }else{
     window.backend = "localhost:8000"
     window.frontend = "localhost:3000"
