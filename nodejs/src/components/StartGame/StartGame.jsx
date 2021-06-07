@@ -41,13 +41,18 @@ export const StartGame = () => {
         });
     };
 
+    //const commentsSocket = new WebSocket('ws://'+ window.backend + '/game/333/'    );
+    //let ff = JSON.stringify({  'text': 'TEST_TEXT'  })
+    //console.log(ff)
+    //commentsSocket.send(ff);
+
   return (
     <>
-    <Grid container spacing={3} style={{"padding-top": "40px"}}>
+    <Grid container spacing={3} style={{"paddingTop": "40px"}}>
         <Grid item xs={6} >
-            <Paper style={{"min-height":"400px", "padding":"15px"}}>
-                <p style={{"text-align":"center"}}>Создать новую игру</p>
-                <Box display="flex" style={{"flex-direction": "column"}}>
+            <Paper style={{"minHeight":"400px", "padding":"15px"}}>
+                <p style={{"textAlign":"center"}}>Создать новую игру</p>
+                <Box display="flex" style={{"flexDirection": "column"}}>
                     <FormControl component="fieldset" style={{"width":"100%"}}>
                       <RadioGroup aria-label="gender" name="chess_variant" value={value} onChange={handleChange}>
                         <FormControlLabel value="yin-yang" control={<Radio />} label="Инь-ян" />
@@ -74,12 +79,12 @@ export const StartGame = () => {
                           <option value="black">Черные</option>
                         </Select>
                     </FormControl>
-                    <Button variant="contained" style={{"margin": "0 auto", "text-align":"center"}}>Создать</Button>
+                    <Button variant="contained" style={{"margin": "0 auto", "textAlign":"center"}}>Создать</Button>
                 </Box>
             </Paper>
         </Grid>
-        <Grid item xs={6} style={{"text-align":"center"}}>
-            <Paper style={{"min-height":"400px", "padding":"15px"}}>
+        <Grid item xs={6} style={{"textAlign":"center"}}>
+            <Paper style={{"minHeight":"400px", "padding":"15px"}}>
                 <p>Присоединится к игре</p>
                 <div style={{"margin": "10px 0", "padding":"10px 0","border":"1px solid"}}>
                     Шахматный вариант_ белыми __ с игроком

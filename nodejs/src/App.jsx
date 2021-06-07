@@ -10,17 +10,19 @@ import {StylesProvider} from "@material-ui/core/styles";
 export const Logined = React.createContext()
 
 if (window.location.host==="buddhachess.org"){
-    window.backend = window.frontend = "https://buddhachess.org"
+    window.backend = window.frontend = "buddhachess.org"
+    window.protocol = "http://"
 }else{
-    window.backend = "http://localhost:8000"
-    window.frontend = "http://localhost:3000"
+    window.backend = "localhost:8000"
+    window.frontend = "localhost:3000"
+    window.protocol = "http://"
 }
 
 export const App = () => {
     const [isLogined, setIsLogined] = useState(false)
     return(
       <StylesProvider injectFirst>
-        <base href={window.frontend} />
+        <base href={window.protocol + window.frontend} />
         <BrowserRouter>
           <Logined.Provider value={isLogined}>
             <NavMenu />

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
     'djoser',
     'corsheaders',
+    'channels',
 
     # приложения django
     'apps.users',
@@ -98,6 +99,18 @@ DATABASES = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+ASGI_APPLICATION = 'config.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
+        },
+    },
+}
+
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
