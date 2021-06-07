@@ -33,6 +33,7 @@ export const Article = () => {
 
   return (
     <>
+      <title>{title}</title>
       <h1>{title}</h1>
       <div dangerouslySetInnerHTML={{ __html: content }} />
     </>

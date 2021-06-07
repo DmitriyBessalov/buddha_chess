@@ -8,6 +8,10 @@ def index(request):
     return render(request, 'index.html', {})
 
 
+def robots(request):
+    return render(request, 'robots.txt', {})
+
+
 @csrf_exempt
 def git_update(request):
     result = subprocess.run('git reset --hard origin/master && git pull https://github.com/DmitriyBessalov/buddha_chess.git', shell=True, stdout=subprocess.PIPE)
