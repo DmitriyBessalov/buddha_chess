@@ -59,14 +59,14 @@ export const NavMenu = () => {
                     </Popover>
                 </>
             :   <>
-                    <Link to="/ru/auth/users" style={{"float": "right"}}>
-                        <Button variant="contained" style={{"margin": "10px"}}>
-                            Регистрация
-                        </Button>
-                    </Link>
                     <Link to="/ru/auth/login" style={{"float": "right"}}>
                         <Button variant="contained" style={{"margin": "10px"}}>
                             Авторизация
+                        </Button>
+                    </Link>
+                    <Link to="/ru/auth/users" style={{"float": "right"}}>
+                        <Button variant="contained" style={{"margin": "10px"}}>
+                            Регистрация
                         </Button>
                     </Link>
                 </>

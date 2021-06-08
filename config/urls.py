@@ -17,4 +17,5 @@ urlpatterns = [
     path('api/article/', include('apps.article.urls')),  # swagger /api/article/docs
 ]
 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
