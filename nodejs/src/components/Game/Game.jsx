@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Button} from '@material-ui/core'
 import {Grid} from '@material-ui/core'
 import {Paper} from '@material-ui/core'
@@ -14,13 +14,14 @@ import {Card} from '@material-ui/core';
 import {Typography} from '@material-ui/core';
 import {Avatar} from '@material-ui/core';
 
+let websocket = new WebSocket('ws://localhost:8000/ws/games')
 
 export const Game = () => {
+  const [gameList, setGameList] = React.useState({})
 
-  let websocket = new WebSocket('ws://localhost:8000/games')
   useEffect(() => {
     const ws = () => websocket.send('{"cmd": "show_games", "jwt": "' + localStorage.getItem('token') + '"}')
-    setTimeout(ws, 2000)
+    setTimeout(ws, 1000)
   }, [])
 
   const formik = useFormik({
@@ -29,13 +30,20 @@ export const Game = () => {
       color: 'random',
     },
     onSubmit: (values) => {
-      console.log(values)
-      alert(JSON.stringify(values));
+      values['cmd']="create_game"
+      console.log(JSON.stringify(values))
+      websocket.send(JSON.stringify(values))
     },
   });
 
   websocket.onmessage = function (e) {
-    console.log(e.data)
+    let message = JSON.parse(e.data)
+
+    console.log(message)
+
+    if (message.list_games.length !== 0){
+        setGameList(message.list_games)
+    }
   }
 
   return (
@@ -80,8 +88,9 @@ export const Game = () => {
         <Grid item xs={6} style={{"textAlign": "center"}}>
           <Paper style={{"minHeight": "400px", "padding": "15px"}}>
             <Typography>Присоединится к игре</Typography>
-            <Box mt={2}>
-              <Card variant="outlined">
+
+              { Object.keys(gameList).map((item, i) => (
+              <Card variant="outlined" style={{"margin":"10px 0 0 0"}}>
                 <Box p={2} display="flex">
                   <Box mr={2}>
                     <Avatar aria-label="recipe">
@@ -89,25 +98,17 @@ export const Game = () => {
                     </Avatar>
                   </Box>
                   <Box display="flex" style={{"flexDirection": "column"}}>
-                    <Typography style={{"textAlign": "left"}}>Инь-ян</Typography>
-                    <Typography style={{"textAlign": "left", "color": "rgba(0, 0, 0, 0.54)"}}>Черными</Typography>
+                    <Typography style={{"textAlign": "left"}}>{gameList[i].chess_variant}</Typography>
+                    <Typography style={{"textAlign": "left", "color": "rgba(0, 0, 0, 0.54)"}}>{gameList[i].color}</Typography>
+                    <Typography style={{"textAlign": "left"}}>с {gameList[i].user}</Typography>
                   </Box>
-                  <Grid container justify="flex-end" spacing={8}>
-                    <Grid item>
-                      <Button color="primary">Присоединиться</Button>
-                    </Grid>
-                  </Grid>
+                </Box>
+                <Box display="flex" style={{"flexDirection": "column", "margin":"0 0 0 240px"}}>
+                    <Button color="primary" style={{"textAlign": "left"}}>Присоединиться</Button>
                 </Box>
               </Card>
-            </Box>
+              ))}
 
-
-            <div style={{"margin": "10px 0", "padding": "10px 0", "border": "1px solid"}}>
-              Шахматный вариант_ белыми __ с игроком
-            </div>
-            <div style={{"margin": "10px 0", "padding": "10px 0", "border": "1px solid"}}>
-              Шахматный вариант_ черными __ с игроком
-            </div>
           </Paper>
         </Grid>
       </Grid>

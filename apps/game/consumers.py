@@ -8,6 +8,10 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from apps.users.models import SocialUser
 from rest_framework.authtoken.models import Token
 
+import redis
+
+r = redis.Redis(host='127.0.0.1', port=6379, db=1)
+
 
 class StartGameConsumer(AsyncWebsocketConsumer):
 
@@ -44,21 +48,40 @@ class StartGameConsumer(AsyncWebsocketConsumer):
             # Получить Авторизацию
             self.scope['user'] = await self.get_user(ws_json['jwt'])
             # print(self.scope["user"].id)
-            data = {"cmd": "list_game",
-                    "list": {
+            data = {"cmd": "list_games",
+                    "list_games": [{
                             "game_id": "1",
                             "chess_variant": "1",
-                            "color": "while"
-                        }
+                            "color": "while",
+                            "user": "Anonimous1"
+                        }, {
+                            "game_id": "2",
+                            "chess_variant": "2",
+                            "color": "black",
+                            "user": "Anonimous2"
+                        }]
                     }
 
         if ws_json['cmd'] == 'create_game':
             game_id = randint(100000000, 999999999)
-            data = {"cmd": "add_list_game",
-                    "game_id": game_id,
-                    "chess_variant": "",
-                    "login": self.scope["user"].username,
-                    "color": "char"
+
+            # r.set('GameID_' + str(game_id), 'value', ex=300)
+
+            if self.scope["user"].username == "":
+                self.scope["user"].username = 'Anonimous'
+
+            data = {"cmd": "list_games",
+                    "list_games": [{
+                            "game_id": "1",
+                            "chess_variant": "1",
+                            "color": "while",
+                            "user": "Anonimous1"
+                        }, {
+                            "game_id": game_id,
+                            "chess_variant": "2",
+                            "color": "black",
+                            "user": self.scope["user"].username,
+                        }]
                     }
 
         if ws_json['cmd'] == 'join_game':
@@ -86,7 +109,6 @@ class StartGameConsumer(AsyncWebsocketConsumer):
     # Receive message from game group
     async def send_data(self, event):
         # Send message to WebSocket
-        print('SENT: ' + event['message'])
+        print('SENT: ' + str(event['message']))
 
         await self.send(text_data=json.dumps(event['message']))
-

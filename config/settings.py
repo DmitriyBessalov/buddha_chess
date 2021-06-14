@@ -106,16 +106,16 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('localhost', 6379)],
+            "hosts": [(os.getenv('REDIS_HOST'), int(os.getenv('REDIS_PORT')))],
         },
     },
 }
 
+# print(CHANNEL_LAYERS['default']['CONFIG']['hosts'][0][1])
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -130,7 +130,6 @@ USE_L10N = True
 USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/'
-
 
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
