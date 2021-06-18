@@ -14,23 +14,42 @@ import {Card} from '@material-ui/core';
 import {Typography} from '@material-ui/core';
 import {Avatar} from '@material-ui/core';
 
-let websocket = new WebSocket('ws://localhost:8000/ws/games')
+
+let websocket
+const ws = () => {
+  websocket = new WebSocket('ws://localhost:8000/ws/games')
+  websocket.onclose = () => {
+    setTimeout(ws, 500)
+  }
+}
+ws()
 
 export const Game = () => {
   const [gameList, setGameList] = React.useState({})
 
   useEffect(() => {
-    const ws = () => websocket.send('{"cmd": "show_games", "jwt": "' + localStorage.getItem('token') + '"}')
-    setTimeout(ws, 1000)
+    const ws_open = () => {
+      console.log(websocket.readyState)
+      if (websocket.readyState === 1) {
+        websocket.send('{"cmd": "show_games", ' +
+          '"jwt": "' + localStorage.getItem('token') +
+          '"anonimous_jwt": "' + localStorage.getItem('anonimous_jwt') + '"}')
+      } else {
+        setTimeout(ws_open, 200)
+      }
+    }
+    ws_open()
   }, [])
 
   const formik = useFormik({
     initialValues: {
-      chess_variant: 'yin-yang',
-      color: 'random',
+      chess_variant: "2",
+      color: 'while',
     },
     onSubmit: (values) => {
-      values['cmd']="create_game"
+      values['cmd'] = "create_game"
+      values['jwt'] = localStorage.getItem("jwt")
+      values['anonimous_jwt'] = localStorage.getItem("anonimous_jwt")
       console.log(JSON.stringify(values))
       websocket.send(JSON.stringify(values))
     },
@@ -38,12 +57,35 @@ export const Game = () => {
 
   websocket.onmessage = function (e) {
     let message = JSON.parse(e.data)
-
-    console.log(message)
-
-    if (message.list_games.length !== 0){
+    switch (message.cmd) {
+      case "anonimous_login": {
+        localStorage.setItem("anonimous_username", message.anonimous_username)
+        localStorage.setItem("anonimous_jwt", message.anonimous_jwt)
+        break
+      }
+      case "list_games": {
         setGameList(message.list_games)
+      }
     }
+  }
+
+  const chess_variant = {
+    "0": "Класические",
+    "1": "Фишера 960",
+    "2": "Инь-ян",
+    "3": "Фланговая",
+    "4": "Инь-ян / Фланговая",
+    "5": "Инь-ян / Фибоначчи",
+  }
+
+  const color = {
+    "random": "Любой",
+    "while": "Белый",
+    "black": "Черный",
+  }
+
+  const join_game = (e) => {
+    console.log(e)
   }
 
   return (
@@ -57,12 +99,10 @@ export const Game = () => {
                 <FormControl component="fieldset" style={{"width": "100%"}}>
                   <RadioGroup aria-label="gender" name="chess_variant" value={formik.values.chess_variant}
                               onChange={formik.handleChange}>
-                    <FormControlLabel value="yin-yang" control={<Radio/>} label="Инь-ян"/>
-                    <FormControlLabel value="flank" control={<Radio/>} label="Фланговая"/>
-                    <FormControlLabel value="yin-yang_flank" control={<Radio/>} label="Инь-ян / Фланговая"/>
-                    <FormControlLabel value="yin-yang_fibonacci" control={<Radio/>} label="Инь-ян / Фибоначчи"/>
-                    <FormControlLabel value="classic" control={<Radio/>} label="Класические"/>
-                    <FormControlLabel value="960" control={<Radio/>} label="Фишера 960"/>
+                    {Object.keys(chess_variant).map((item, i) => (
+                      <FormControlLabel key={i} value={((i + 2) % 6).toString()} control={<Radio/>}
+                                        label={chess_variant[(i + 2) % 6]}/>
+                    ))}
                   </RadioGroup>
                 </FormControl>
                 <FormControl variant="outlined" style={{"margin": "15px"}}>
@@ -87,10 +127,9 @@ export const Game = () => {
         </Grid>
         <Grid item xs={6} style={{"textAlign": "center"}}>
           <Paper style={{"minHeight": "400px", "padding": "15px"}}>
-            <Typography>Присоединится к игре</Typography>
-
-              { Object.keys(gameList).map((item, i) => (
-              <Card variant="outlined" style={{"margin":"10px 0 0 0"}}>
+            <Typography>Подключиться к играм:</Typography>
+            {Object.keys(gameList).map((item, i) => (
+              <Card key={gameList[i].game_id} id={gameList[i].game_id} variant="outlined" style={{"margin": "10px 0 0 0"}}>
                 <Box p={2} display="flex">
                   <Box mr={2}>
                     <Avatar aria-label="recipe">
@@ -98,17 +137,20 @@ export const Game = () => {
                     </Avatar>
                   </Box>
                   <Box display="flex" style={{"flexDirection": "column"}}>
-                    <Typography style={{"textAlign": "left"}}>{gameList[i].chess_variant}</Typography>
-                    <Typography style={{"textAlign": "left", "color": "rgba(0, 0, 0, 0.54)"}}>{gameList[i].color}</Typography>
-                    <Typography style={{"textAlign": "left"}}>с {gameList[i].user}</Typography>
+                    <Typography style={{"textAlign": "left"}}>{chess_variant[gameList[i].chess_variant]}</Typography>
+                    <Typography style={{"textAlign": "left"}}>{gameList[i].user}</Typography>
+                    <Typography style={{
+                      "textAlign": "left",
+                      "color": "rgba(0, 0, 0, 0.54)"
+                    }}>{color[gameList[i].color]}</Typography>
                   </Box>
                 </Box>
-                <Box display="flex" style={{"flexDirection": "column", "margin":"0 0 0 240px"}}>
-                    <Button color="primary" style={{"textAlign": "left"}}>Присоединиться</Button>
+                <Box display="flex" style={{"flexDirection": "column", "margin": "0 0 0 240px"}}>
+                  <Button color="primary" style={{"textAlign": "left"}}
+                          onClick={() => join_game(gameList[i].game_id)}>Присоединиться</Button>
                 </Box>
               </Card>
-              ))}
-
+            ))}
           </Paper>
         </Grid>
       </Grid>
