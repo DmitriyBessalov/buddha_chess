@@ -3,10 +3,6 @@ import classes from './Game.css'
 
 export const Game = () => {
 
-  const coords = `coords`;
-  const mask = `mask`;
-  const coord = `coord`;
-
   return (
     <>
       <style id="board_style">
@@ -144,14 +140,14 @@ export const Game = () => {
             <div id="moves_list">
             </div>
           </div>
-          <div style={{height: '20px', border: '#0a0ae3 1px solid', display: 'flex', flexDirection: 'column'}}>
+          {/*<div style={{height: '20px', border: '#0a0ae3 1px solid', display: 'flex', flexDirection: 'column'}}>*/}
             {/*<button onClick="size0(1)">Размер 8x8 (без центра)</button>*/}
             {/*<button onClick="size1(1)">Размер 8x8</button>*/}
             {/*<button onClick="size2(1)">Размер 10x10</button>*/}
             {/*<button onClick="size3(1)">Размер 12x12</button>*/}
             {/*<button onClick="detour_moves()">Сделать ход</button>*/}
             {/*<button onClick="rotate()">Перевернуть доску</button>*/}
-          </div>
+          {/*</div>*/}
         </div>
       </div>
     </>
