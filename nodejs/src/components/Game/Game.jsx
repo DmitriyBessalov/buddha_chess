@@ -1,159 +1,159 @@
-import React, {useState, useEffect} from 'react'
-import {Button} from '@material-ui/core'
-import {Grid} from '@material-ui/core'
-import {Paper} from '@material-ui/core'
-import {FormControl} from '@material-ui/core'
-import {RadioGroup} from '@material-ui/core'
-import {FormControlLabel} from '@material-ui/core'
-import {Radio} from '@material-ui/core'
-import {Select} from '@material-ui/core';
-import {InputLabel} from '@material-ui/core';
-import {Box} from '@material-ui/core';
-import {useFormik} from 'formik';
-import {Card} from '@material-ui/core';
-import {Typography} from '@material-ui/core';
-import {Avatar} from '@material-ui/core';
-
-
-let websocket
-const ws = () => {
-  websocket = new WebSocket('ws://localhost:8000/ws/games')
-  websocket.onclose = () => {
-    setTimeout(ws, 500)
-  }
-}
-ws()
+import React from 'react'
+import classes from './Game.css'
 
 export const Game = () => {
-  const [gameList, setGameList] = React.useState({})
 
-  useEffect(() => {
-    const ws_open = () => {
-      console.log(websocket.readyState)
-      if (websocket.readyState === 1) {
-        websocket.send('{"cmd": "show_games", ' +
-          '"jwt": "' + localStorage.getItem('token') +
-          '"anonimous_jwt": "' + localStorage.getItem('anonimous_jwt') + '"}')
-      } else {
-        setTimeout(ws_open, 200)
-      }
-    }
-    ws_open()
-  }, [])
-
-  const formik = useFormik({
-    initialValues: {
-      chess_variant: "2",
-      color: 'while',
-    },
-    onSubmit: (values) => {
-      values['cmd'] = "create_game"
-      values['jwt'] = localStorage.getItem("jwt")
-      values['anonimous_jwt'] = localStorage.getItem("anonimous_jwt")
-      console.log(JSON.stringify(values))
-      websocket.send(JSON.stringify(values))
-    },
-  });
-
-  websocket.onmessage = function (e) {
-    let message = JSON.parse(e.data)
-    switch (message.cmd) {
-      case "anonimous_login": {
-        localStorage.setItem("anonimous_username", message.anonimous_username)
-        localStorage.setItem("anonimous_jwt", message.anonimous_jwt)
-        break
-      }
-      case "list_games": {
-        setGameList(message.list_games)
-      }
-    }
-  }
-
-  const chess_variant = {
-    "0": "Класические",
-    "1": "Фишера 960",
-    "2": "Инь-ян",
-    "3": "Фланговая",
-    "4": "Инь-ян / Фланговая",
-    "5": "Инь-ян / Фибоначчи",
-  }
-
-  const color = {
-    "random": "Любой",
-    "while": "Белый",
-    "black": "Черный",
-  }
-
-  const join_game = (e) => {
-    console.log(e)
-  }
+  const coords = `coords`;
+  const mask = `mask`;
+  const coord = `coord`;
 
   return (
     <>
-      <Grid container spacing={3} style={{"paddingTop": "40px"}}>
-        <Grid item xs={6}>
-          <Paper style={{"minHeight": "400px", "padding": "15px"}}>
-            <Typography style={{"textAlign": "center"}}>Создать новую игру</Typography>
-            <form onSubmit={formik.handleSubmit}>
-              <Box display="flex" style={{"flexDirection": "column"}}>
-                <FormControl component="fieldset" style={{"width": "100%"}}>
-                  <RadioGroup aria-label="gender" name="chess_variant" value={formik.values.chess_variant}
-                              onChange={formik.handleChange}>
-                    {Object.keys(chess_variant).map((item, i) => (
-                      <FormControlLabel key={i} value={((i + 2) % 6).toString()} control={<Radio/>}
-                                        label={chess_variant[(i + 2) % 6]}/>
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-                <FormControl variant="outlined" style={{"margin": "15px"}}>
-                  <InputLabel id="demo-simple-select-label">Цвет фигур</InputLabel>
-                  <Select native name="color"
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          label="Цвет фигур"
-                          value={formik.values.color}
-                          onChange={formik.handleChange}
-                  >
-                    <option value="random">Любой</option>
-                    <option value="while">Белые</option>
-                    <option value="black">Черные</option>
-                  </Select>
-                </FormControl>
-                <Button variant="contained" type="submit"
-                        style={{"margin": "0 auto", "textAlign": "center"}}>Создать</Button>
-              </Box>
-            </form>
-          </Paper>
-        </Grid>
-        <Grid item xs={6} style={{"textAlign": "center"}}>
-          <Paper style={{"minHeight": "400px", "padding": "15px"}}>
-            <Typography>Подключиться к играм:</Typography>
-            {Object.keys(gameList).map((item, i) => (
-              <Card key={gameList[i].game_id} id={gameList[i].game_id} variant="outlined" style={{"margin": "10px 0 0 0"}}>
-                <Box p={2} display="flex">
-                  <Box mr={2}>
-                    <Avatar aria-label="recipe">
-                      И
-                    </Avatar>
-                  </Box>
-                  <Box display="flex" style={{"flexDirection": "column"}}>
-                    <Typography style={{"textAlign": "left"}}>{chess_variant[gameList[i].chess_variant]}</Typography>
-                    <Typography style={{"textAlign": "left"}}>{gameList[i].user}</Typography>
-                    <Typography style={{
-                      "textAlign": "left",
-                      "color": "rgba(0, 0, 0, 0.54)"
-                    }}>{color[gameList[i].color]}</Typography>
-                  </Box>
-                </Box>
-                <Box display="flex" style={{"flexDirection": "column", "margin": "0 0 0 240px"}}>
-                  <Button color="primary" style={{"textAlign": "left"}}
-                          onClick={() => join_game(gameList[i].game_id)}>Присоединиться</Button>
-                </Box>
-              </Card>
-            ))}
-          </Paper>
-        </Grid>
-      </Grid>
+      <style id="board_style">
+
+      </style>
+      <div style={{
+        position: 'absolute',
+        margin: 'auto',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        width: '1000px',
+        height: '720px',
+        display: 'flex'
+      }}>
+        <div id="container" style={{overflow: 'hidden', width: '720px', height: '720px'}}>
+          <div id="board_rotate">
+            <div id="board" style={{cursor: 'pointer'}}>
+              <div style={{height: '50%'}}>
+                <div id="board_path_top">
+                  <div className="coords collum">
+                    <div className="coord a">5</div>
+                    <div className="coord b">6</div>
+                    <div className="coord a">7</div>
+                    <div className="coord b">8</div>
+                    <div className="coord a">9</div>
+                    <div className="coord b">10</div>
+                    <div className="coord a">11</div>
+                    <div className="coord b">12</div>
+                  </div>
+                  <div className="coords row">
+                    <div className="coord b">a</div>
+                    <div className="coord a">b</div>
+                    <div className="coord b">c</div>
+                    <div className="coord a">d</div>
+                    <div className="coord b">e</div>
+                    <div className="coord a">f</div>
+                    <div className="coord b">g</div>
+                    <div className="coord a">h</div>
+                    <div className="coord b">i</div>
+                    <div className="coord a">j</div>
+                    <div className="coord b">k</div>
+                    <div className="coord a">l</div>
+                  </div>
+                  <div className="size0">
+                    <div className="piece_rotate" style={{transform: 'translate(300px, 180px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(360px, 180px)'}}>
+                      <div className="mask"/>
+                    </div>
+                  </div>
+                  <div className="size4">
+                    <div className="piece_rotate" style={{transform: 'translate(180px, 240px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(120px, 180px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(60px, 120px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(480px, 240px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(540px, 180px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(600px, 120px)'}}>
+                      <div className="mask"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{overflow: 'hidden', height: '50%'}}>
+                <div id="board_path_bottom">
+                  <div className="coords collum">
+                    <div className="coord a">1</div>
+                    <div className="coord b">2</div>
+                    <div className="coord a">3</div>
+                    <div className="coord b">4</div>
+                    <div className="coord a">5</div>
+                    <div className="coord b">6</div>
+                  </div>
+                  <div className="coords row">
+                    <div className="coord b">a</div>
+                    <div className="coord a">b</div>
+                    <div className="coord b">c</div>
+                    <div className="coord a">d</div>
+                    <div className="coord b">e</div>
+                    <div className="coord a">f</div>
+                    <div className="coord b">g</div>
+                    <div className="coord a">h</div>
+                    <div className="coord b">i</div>
+                    <div className="coord a">j</div>
+                    <div className="coord b">k</div>
+                    <div className="coord a">l</div>
+                  </div>
+                  <div className="size0">
+                    <div className="piece_rotate" style={{transform: 'translate(300px, 120px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(360px, 120px)'}}>
+                      <div className="mask"/>
+                    </div>
+                  </div>
+                  <div className="size4">
+                    <div className="piece_rotate" style={{transform: 'translate(180px, 60px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(120px, 120px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(60px, 180px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(480px, 60px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(540px, 120px)'}}>
+                      <div className="mask"/>
+                    </div>
+                    <div className="piece_rotate" style={{transform: 'translate(600px, 180px)'}}>
+                      <div className="mask"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{margin: '0 0 0 30px'}}>
+          <div style={{height: '695px', border: '#0a0ae3 1px solid', overflowY: 'scroll'}} id="block_moves_list">
+            <div id="moves_list">
+            </div>
+          </div>
+          <div style={{height: '20px', border: '#0a0ae3 1px solid', display: 'flex', flexDirection: 'column'}}>
+            {/*<button onClick="size0(1)">Размер 8x8 (без центра)</button>*/}
+            {/*<button onClick="size1(1)">Размер 8x8</button>*/}
+            {/*<button onClick="size2(1)">Размер 10x10</button>*/}
+            {/*<button onClick="size3(1)">Размер 12x12</button>*/}
+            {/*<button onClick="detour_moves()">Сделать ход</button>*/}
+            {/*<button onClick="rotate()">Перевернуть доску</button>*/}
+          </div>
+        </div>
+      </div>
     </>
   )
 }

@@ -1,12 +1,12 @@
 import json
 import ast
-import asyncio
+import time
 from random import randint
 
 from django.contrib.auth.models import AnonymousUser
 
 from channels.db import database_sync_to_async
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from apps.users.models import SocialUser
 from rest_framework.authtoken.models import Token
 
@@ -15,7 +15,7 @@ import redis
 r = redis.Redis(host='127.0.0.1', port=6379, db=1)
 
 
-class StartGameConsumer(AsyncWebsocketConsumer):
+class StartGameConsumer(AsyncJsonWebsocketConsumer):
 
     async def connect(self):
         self.game_group_name = 'start_game'
@@ -28,9 +28,10 @@ class StartGameConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        if self.game_group_name == 'start_game':
-            print(1)
-            # await self.receive(self, '{"cmd": "show_games"}')
+        pass
+        # if self.game_group_name == 'start_game':
+        #     print(1)
+        # await self.receive(self, '{"cmd": "show_games"}')
 
         # Leave game group
         # await self.channel_layer.group_discard(
@@ -48,14 +49,13 @@ class StartGameConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, text_data):
+        print('GET: ' + text_data)
         ws_json = json.loads(text_data)
-        send_data = {"cmd": "error"}
-
         if self.scope["user"].username == "":
-            if ws_json['jwt'] != None:
+            if ws_json['jwt'] != "null" and ws_json['jwt'] != None:
                 self.scope['user'].username = await self.get_user(ws_json['jwt'])
             else:
-                if ws_json['anonimous_jwt'] != None:
+                if ws_json['anonimous_jwt'] != "null" and ws_json['anonimous_jwt'] != None:
                     self.scope['user'].username = r.get('anonimous_' + ws_json['anonimous_jwt']).decode("utf-8")
 
             if self.scope["user"].username == "":
@@ -68,50 +68,71 @@ class StartGameConsumer(AsyncWebsocketConsumer):
                 r.set('anonimous_' + self.scope["user"].anonimous_jwt, self.scope["user"].username, ex=2635200)
                 await self.send(text_data=json.dumps(send_data))
 
+        _send_data = {"cmd": "error"}
+
         if ws_json['cmd'] == 'create_game':
             game_id = randint(100000000, 999999999)
-            r.set('game_' + str(game_id), str({
+            if ws_json['color'] == "random":
+                if randint(0, 1):
+                    ws_json['color'] = "while"
+                else:
+                    ws_json['color'] = "black"
+
+            r.set('game_' + str(game_id), json.dumps({
                 "game_id": game_id,
                 "chess_variant": ws_json['chess_variant'],
                 "color": ws_json['color'],
                 "user": self.scope["user"].username,
-            }), ex=40)
+            }), ex=20)
             ws_json['cmd'] = "show_games"
+
+        if ws_json['cmd'] == 'join_game':
+            game = r.get('game_' + str(ws_json['game_id']))
+            game = ast.literal_eval(game.decode("utf-8"))
+
+            if game['user'] != self.scope["user"].username:
+                _send_data = {"cmd": "join_game",
+                              "game_id": ws_json['game_id'],
+                              "chess_variant": game["chess_variant"],
+                              "time_while": 2160,
+                              "time_black": 2160,
+                              "time_move_add": 5,
+                              "time_start": time.time()
+                              }
+
+                if game['color'] == "wrile":
+                    _send_data["rival_white"] = game["user"]
+                    _send_data["rival_black"] = self.scope["user"].username
+                else:
+                    _send_data["rival_black"] = game['user']
+                    _send_data["rival_white"] = self.scope["user"].username
 
         if ws_json['cmd'] == 'show_games':
             data = ''
 
             for key in r.keys('game_*'):
-                f = ast.literal_eval(r.get(key).decode("utf-8"))
-                # f['end_time'] = r.ttl(key)
+                k = ast.literal_eval(r.get(key).decode("utf-8"))
+                k['ttl'] = r.ttl(key)
+                data = data + str(k) + ', '
 
-                data = data + str(f) + ', '
+            if data == '':
+                data = '[]'
 
-            print(data)
-            send_data = {"cmd": "list_games",
-                         "list_games": ast.literal_eval(data)
-                         }
-
-        if ws_json['cmd'] == 'join_game':
-            send_data = {"cmd": "rival",
-                         "login": "str",
-                         "chess_variant": "",
-                         "rival_login": "",
-                         "my_color": "",
-                         }
+            _send_data = {"cmd": "list_games",
+                          "list_games": ast.literal_eval(data)
+                          }
 
         if ws_json['cmd'] == 'move':
-            send_data = {"cmd": "move",
-                         "num_move": "int",
-                         "move": "",
-                         "move_color": "",
-                         "time": "",
-                         }
+            _send_data = {"cmd": "move",
+                          "num_move": "int",
+                          "move": "",
+                          "move_color": "",
+                          "time": "",
+                          }
 
-        # Send message to game group
         await self.channel_layer.group_send(
             self.game_group_name,
-            {'type': 'send_data', 'message': send_data}
+            {'type': 'send_data', 'message': _send_data}
         )
 
     # Receive message from game group
