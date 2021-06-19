@@ -14,7 +14,7 @@ export const ResendActivation = () => {
   const FormSubmit = (event) => {
     const _json = '{"email":"' + email + '"}'
     console.log(_json)
-    fetch(window.protocol + window.backend + '/api/auth/users/resend_activation/', {
+    fetch(window.web_protocol + window.backend + '/api/auth/users/resend_activation/', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: _json

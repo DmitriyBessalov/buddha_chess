@@ -34,7 +34,7 @@ export const Login = () => {
   const FormSubmit = (event) => {
     const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
     console.log(_json)
-    fetch(window.protocol + window.backend + '/api/auth/token', {
+    fetch(window.web_protocol + window.backend + '/api/auth/token', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: _json
@@ -53,7 +53,7 @@ export const Login = () => {
         if (rememberPassword) {
           localStorage.setItem('password', password)
         }
-        window.location.replace(window.protocol + window.frontend)
+        window.location.replace(window.web_protocol + window.frontend)
       } else if (response.status === 400) {
         if (JSON.parse(response.body).non_field_errors !== undefined) {
           setPasswordError(true)

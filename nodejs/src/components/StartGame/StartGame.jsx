@@ -17,7 +17,7 @@ import {Avatar} from '@material-ui/core';
 
 let websocket
 const ws = () => {
-  websocket = new WebSocket('ws://localhost:8000/ws/games')
+  websocket = new WebSocket(window.ws_protocol + window.backend +'/ws/games')
   websocket.onclose = () => {
     setTimeout(ws, 500)
   }

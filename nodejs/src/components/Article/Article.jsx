@@ -14,7 +14,7 @@ export const Article = () => {
 
     console.log(_json)
 
-    fetch(window.protocol + window.backend + '/api/article/', {
+    fetch(window.web_protocol + window.backend + '/api/article/', {
       method: 'POST',
       body: _json
     }).then(

@@ -13,11 +13,13 @@ export const Logined = React.createContext()
 
 if (window.location.host === "buddhachess.org") {
   window.backend = window.frontend = "buddhachess.org"
-  window.protocol = "https://"
+  window.web_protocol = "https://"
+  window.ws_protocol = "wss://"
 } else {
   window.backend = "localhost:8000"
   window.frontend = "localhost:3000"
   window.protocol = "http://"
+  window.ws_protocol = "ws://"
 }
 
 export const App = () => {
