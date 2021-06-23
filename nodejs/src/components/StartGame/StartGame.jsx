@@ -26,7 +26,6 @@ export const StartGame = () => {
   const [gameList, setGameList] = useState({})
 
   useEffect(() => {
-    console.log('useEffect')
     const ws_init = () => {
       console.log(websocket.readyState)
       switch (websocket.readyState) {
@@ -92,7 +91,7 @@ export const StartGame = () => {
 
 const formik = useFormik({
   initialValues: {
-    chess_variant: "2",
+    chess_variant: "1",
     color: 'while',
   },
   onSubmit: (values) => {
@@ -146,9 +145,9 @@ return (
               <FormControl component="fieldset" style={{"width": "100%"}}>
                 <RadioGroup aria-label="gender" name="chess_variant" value={formik.values.chess_variant}
                             onChange={formik.handleChange}>
-                  {Object.keys(chess_variant).map((item, i) => (
-                    <FormControlLabel key={i} value={((i + 2) % 6).toString()} control={<Radio/>}
-                                      label={chess_variant[(i + 2) % 6]}/>
+                  {Object.keys(chess_variant).map((item, i, h) => (
+                    <FormControlLabel key={h} value={h[i]} control={<Radio/>}
+                                      label={chess_variant[parseInt(h[i])]}/>
                   ))}
                 </RadioGroup>
               </FormControl>
