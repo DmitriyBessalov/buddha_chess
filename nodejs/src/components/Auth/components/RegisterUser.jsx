@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {Typography, TextField, Grid, Button} from '@material-ui/core';
 import classes from '../Auth.module.css'
+import {web_protocol, backend} from "../../conf";
 
 export const RegisterUser = () => {
   const [email, setEmail] = React.useState('')
@@ -26,7 +27,7 @@ export const RegisterUser = () => {
     if (password.length > 5) {
       const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
       console.log(_json)
-      fetch(window.web_protocol + window.backend + '/api/auth/users/', {
+      fetch(web_protocol + backend + '/api/auth/users/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: _json

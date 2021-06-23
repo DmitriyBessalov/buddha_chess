@@ -9,7 +9,7 @@ import {
   Checkbox
 } from '@material-ui/core';
 import classes from '../Auth.module.css'
-
+import {web_protocol, backend, frontend} from "../../conf";
 
 export const Login = () => {
   const [email, setEmail] = React.useState(localStorage.getItem('email'))
@@ -34,7 +34,7 @@ export const Login = () => {
   const FormSubmit = (event) => {
     const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
     console.log(_json)
-    fetch(window.web_protocol + window.backend + '/api/auth/token', {
+    fetch(web_protocol + backend + '/api/auth/token', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: _json
@@ -53,7 +53,7 @@ export const Login = () => {
         if (rememberPassword) {
           localStorage.setItem('password', password)
         }
-        window.location.replace(window.web_protocol + window.frontend)
+        window.location.replace(web_protocol + frontend)
       } else if (response.status === 400) {
         if (JSON.parse(response.body).non_field_errors !== undefined) {
           setPasswordError(true)

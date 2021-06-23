@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, TextField, Typography} from "@material-ui/core";
 import classes from "../Auth.module.css";
+import {web_protocol, backend} from "../../conf";
 
 export const ResetPassword = () => {
   const [email, setEmail] = React.useState(localStorage.getItem('email'))
@@ -14,7 +15,7 @@ export const ResetPassword = () => {
   const FormSubmit = (event) => {
     const _json = '{"email":"' + email + '"}'
     console.log(_json)
-    fetch(window.web_protocol + window.backend + '/api/auth/users/reset_password/', {
+    fetch(web_protocol + backend + '/api/auth/users/reset_password/', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: _json

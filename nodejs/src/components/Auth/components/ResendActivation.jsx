@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, TextField, Typography} from "@material-ui/core";
 import classes from "../Auth.module.css";
+import {web_protocol, backend} from "../../conf";
 
 export const ResendActivation = () => {
   const [email, setEmail] = React.useState(localStorage.getItem('email'))
@@ -14,7 +15,7 @@ export const ResendActivation = () => {
   const FormSubmit = (event) => {
     const _json = '{"email":"' + email + '"}'
     console.log(_json)
-    fetch(window.web_protocol + window.backend + '/api/auth/users/resend_activation/', {
+    fetch(web_protocol + backend + '/api/auth/users/resend_activation/', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: _json

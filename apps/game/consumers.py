@@ -59,7 +59,7 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
                     self.scope['user'].username = r.get('anonimous_' + ws_json['anonimous_jwt']).decode("utf-8")
 
             if self.scope["user"].username == "":
-                self.scope["user"].username = "User_" + str(randint(10000, 99999))
+                self.scope["user"].username = "Anonim_" + str(randint(10000, 99999))
                 self.scope["user"].anonimous_jwt = str(randint(1000000000, 9999999999))
                 send_data = {"cmd": "anonimous_login",
                              "anonimous_username": self.scope["user"].username,

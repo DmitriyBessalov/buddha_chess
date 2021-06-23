@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, TextField, Typography} from "@material-ui/core";
 import classes from "../Auth.module.css";
-
+import {web_protocol, backend} from "../../conf";
 
 export const ResetPasswordConfirm = (props) => {
   const [formSend, setFormSend] = React.useState(false)
@@ -25,7 +25,7 @@ export const ResetPasswordConfirm = (props) => {
       if (newPassword.length > 5) {
         setNewPasswordHelperText('')
         setNewPasswordError(false)
-        fetch(window.web_protocol + window.backend + '/api/auth/users/reset_password_confirm/', {
+        fetch(web_protocol + backend + '/api/auth/users/reset_password_confirm/', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: _json

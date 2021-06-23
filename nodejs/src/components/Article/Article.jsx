@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {web_protocol, backend} from "../conf";
 
 export const Article = () => {
   const [title, setTitle] = React.useState("")
@@ -14,7 +15,7 @@ export const Article = () => {
 
     console.log(_json)
 
-    fetch(window.web_protocol + window.backend + '/api/article/', {
+    fetch(web_protocol + backend + '/api/article/', {
       method: 'POST',
       body: _json
     }).then(

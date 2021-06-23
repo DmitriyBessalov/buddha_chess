@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import {Typography} from "@material-ui/core";
-
+import {web_protocol, backend} from "../../conf";
 
 export const Activation = (props) => {
   const [result, setResult] = React.useState(null)
@@ -13,7 +13,7 @@ export const Activation = (props) => {
     renderCount.current++
     if (renderCount.current === 2) {
 
-      fetch(window.web_protocol + window.backend + '/api/auth/users/activation/', {
+      fetch(web_protocol + backend + '/api/auth/users/activation/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: _json

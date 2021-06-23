@@ -15,22 +15,22 @@ piece{
 }
 
 piece.black.pawn{
-    background-image: url('img/p.svg');
+    background-image: url('img/p_.svg');
 }
 piece.black.rook{
-    background-image: url('img/r.svg')
+    background-image: url('img/r_.svg')
 }
 piece.black.knight{
-    background-image: url('img/n.svg');
+    background-image: url('img/n_.svg');
 }
 piece.black.bishop{
-    background-image: url('img/b.svg');
+    background-image: url('img/b_.svg');
 }
 piece.black.queen{
-    background-image: url('img/q.svg');
+    background-image: url('img/q_.svg');
 }
 piece.black.king{
-    background-image: url('img/k.svg');
+    background-image: url('img/k_.svg');
 }
 piece.white.pawn{
     background-image: url('img/P.svg');
@@ -53,22 +53,22 @@ piece.white.king{
 
 /***************/
 piece.black.heavy-pawn{
-    background-image: url('img/h.svg');
+    background-image: url('img/h_.svg');
 }
 piece.black.regal-pawn{
-    background-image: url('img/e.svg');
+    background-image: url('img/e_.svg');
 }
 piece.black.archbishop{
-    background-image: url('img/a.svg');
+    background-image: url('img/a_.svg');
 }
 piece.black.pegasus{
-    background-image: url('img/g.svg');
+    background-image: url('img/g_.svg');
 }
 piece.black.centaur{
-    background-image: url('img/t.svg');
+    background-image: url('img/t_.svg');
 }
 piece.black.chancellor{
-    background-image: url('img/c.svg');
+    background-image: url('img/c_.svg');
 }
 piece.white.heavy-pawn{
     background-image: url('img/H.svg');

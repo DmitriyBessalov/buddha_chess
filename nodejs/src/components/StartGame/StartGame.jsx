@@ -13,21 +13,25 @@ import {useFormik} from 'formik';
 import {Card} from '@material-ui/core';
 import {Typography} from '@material-ui/core';
 import {Avatar} from '@material-ui/core';
-
+import {ws_protocol, backend} from "../conf";
 
 let websocket
 const ws = () => {
-  websocket = new WebSocket(window.ws_protocol + window.backend +'/ws/games')
-  websocket.onclose = () => {
-    setTimeout(ws, 500)
-  }
+  websocket = new WebSocket(ws_protocol + backend + '/ws/games')
 }
 ws()
+
+window.onpopstate = (event) => {
+  //window.onhashchange
+  alert('22')
+};
+
 
 export const StartGame = () => {
   const [gameList, setGameList] = React.useState({})
 
   useEffect(() => {
+    console.log('useEffect')
     const ws_init = () => {
       console.log(websocket.readyState)
       switch (websocket.readyState) {
@@ -38,18 +42,54 @@ export const StartGame = () => {
           let values = {}
           values['cmd'] = "show_games"
           values['jwt'] = localStorage.getItem("jwt")
-          values['anonimous_jwt'] = localStorage.getItem("anonimous_jwt")
+          values['anonimous_jwt'] = sessionStorage.getItem("anonimous_jwt")
           console.log(JSON.stringify(values))
           websocket.send(JSON.stringify(values))
+          websocket.onclose = () => {
+            ws_init()
+          }
           break
         case 2:
         case 3:
-          setTimeout(ws, 500)
-          setTimeout(ws_init, 3000)
+          websocket.close()
+          setTimeout(ws, 1000)
+          setTimeout(ws_init, 1600)
       }
     }
-    ws_init()
+    if (websocket.readyState !== 1)
+      setTimeout(ws_init, 1000)
   }, [])
+
+
+  websocket.onmessage = function (e) {
+    let message = JSON.parse(e.data)
+
+    switch (message.cmd) {
+      case "anonimous_login": {
+        sessionStorage.setItem("anonimous_username", message.anonimous_username)
+        sessionStorage.setItem("anonimous_jwt", message.anonimous_jwt)
+        break
+      }
+      case "list_games": {
+        setGameList(message.list_games)
+        Object.entries(message.list_games).forEach(([key, value]) => {
+          setTimeout(rmGame, (value.ttl - 1) * 1000, value.game_id)
+        })
+        break
+      }
+      case "join_game": {
+        if (message.rival_black === localStorage.getItem("email") ||
+          message.rival_white === localStorage.getItem("email") ||
+          message.rival_black === sessionStorage.getItem("anonimous_username") ||
+          message.rival_white === sessionStorage.getItem("anonimous_username")
+        ) {
+          sessionStorage.setItem("game_id_" + message.game_id, JSON.stringify(message))
+          window.location.replace('/ru/партия/' + message.game_id)
+        }
+      }
+    }
+  }
+
 
   const formik = useFormik({
     initialValues: {
@@ -59,7 +99,7 @@ export const StartGame = () => {
     onSubmit: (values) => {
       values['cmd'] = "create_game"
       values['jwt'] = localStorage.getItem("jwt")
-      values['anonimous_jwt'] = localStorage.getItem("anonimous_jwt")
+      values['anonimous_jwt'] = sessionStorage.getItem("anonimous_jwt")
       console.log(JSON.stringify(values))
       websocket.send(JSON.stringify(values))
     },
@@ -85,39 +125,12 @@ export const StartGame = () => {
     "black": "Черный",
   }
 
-  websocket.onmessage = function (e) {
-    let message = JSON.parse(e.data)
-
-    switch (message.cmd) {
-      case "anonimous_login": {
-        localStorage.setItem("anonimous_username", message.anonimous_username)
-        localStorage.setItem("anonimous_jwt", message.anonimous_jwt)
-        break
-      }
-      case "list_games": {
-        setGameList(message.list_games)
-        Object.entries(message.list_games).forEach(([key, value]) => {
-          setTimeout(rmGame, (value.ttl - 1) * 1000, value.game_id)
-        })
-        break
-      }
-      case "join_game": {
-        if (message.rival_black === localStorage.getItem("anonimous_username") ||
-          message.rival_white === localStorage.getItem("anonimous_username")) {
-
-          localStorage.setItem("game_id_"+message.game_id, message)
-          window.history.replaceState(null, "Пратия", '/ru/партия/' + message.game_id);
-        }
-      }
-    }
-  }
-
 
   const join_game = (game_id) => {
     let values = {}
     values['cmd'] = "join_game"
     values['jwt'] = localStorage.getItem("jwt")
-    values['anonimous_jwt'] = localStorage.getItem("anonimous_jwt")
+    values['anonimous_jwt'] = sessionStorage.getItem("anonimous_jwt")
     values['game_id'] = game_id
     console.log(JSON.stringify(values))
     websocket.send(JSON.stringify(values))

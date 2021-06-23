@@ -8,7 +8,7 @@ import {
 
 //import MenuIcon from '@material-ui/icons/Menu';
 //import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {Link} from "react-router-dom";
+//import {Link} from "react-router-dom";
 
 //import {Logined} from '../App'
 
@@ -29,12 +29,12 @@ export const NavMenu = () => {
   //if (useMediaQuery('(min-width:1024px)')){
   return (
     <Container>
-      <Link to="/">
+      <a href="/">
         <Button variant="contained" style={{"margin": "10px"}}>Документация</Button>
-      </Link>
-      <Link to="/ru/играть">
+      </a>
+      <a href="/ru/играть">
         <Button variant="contained" style={{"margin": "10px"}}>Играть</Button>
-      </Link>
+      </a>
       {isLoginen
         ? <>
           <Button variant="contained" style={{"float": "right", "margin": "10px"}} onClick={Logout}>
@@ -45,16 +45,16 @@ export const NavMenu = () => {
           </Button>
         </>
         : <>
-          <Link to="/ru/auth/login" style={{"float": "right"}}>
+          <a href="/ru/auth/login" style={{"float": "right"}}>
             <Button variant="contained" style={{"margin": "10px"}}>
               Авторизация
             </Button>
-          </Link>
-          <Link to="/ru/auth/users" style={{"float": "right"}}>
+          </a>
+          <a href="/ru/auth/users" style={{"float": "right"}}>
             <Button variant="contained" style={{"margin": "10px"}}>
               Регистрация
             </Button>
-          </Link>
+          </a>
         </>
       }
     </Container>

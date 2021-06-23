@@ -8,25 +8,15 @@ import {Article} from "./components/Article/Article";
 import {Game} from "./components/Game/Game";
 import {StartGame} from "./components/StartGame/StartGame";
 import {StylesProvider} from "@material-ui/core/styles";
+import {frontend, web_protocol} from "./components/conf";
 
 export const Logined = React.createContext()
-
-if (window.location.host === "buddhachess.org") {
-  window.backend = window.frontend = "buddhachess.org"
-  window.web_protocol = "https://"
-  window.ws_protocol = "wss://"
-} else {
-  window.backend = "localhost:8000"
-  window.frontend = "localhost:3000"
-  window.protocol = "http://"
-  window.ws_protocol = "ws://"
-}
 
 export const App = () => {
   //const [isLogined, setIsLogined] = useState(false)
   return (
     <StylesProvider injectFirst>
-      <base href={window.protocol + window.frontend}/>
+      <base href={web_protocol + frontend}/>
       <BrowserRouter>
         {/*<Logined.Provider value={isLogined}>*/}
         <NavMenu/>
