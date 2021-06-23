@@ -1,32 +1,21 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {
   Container,
-//  Popover,
   Button,
-//  MenuItem
 } from '@material-ui/core';
 
-//import MenuIcon from '@material-ui/icons/Menu';
-//import useMediaQuery from '@material-ui/core/useMediaQuery';
-//import {Link} from "react-router-dom";
 
-//import {Logined} from '../App'
 
 export const NavMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [isLoginen, setIsLogin] = React.useState(false)
-
-  //const isLogin = useContext(isLoginen)
   let Login = false
   if (localStorage.getItem('token') !== null) Login = true
-  //console.log(localStorage.getItem('token'))
   if (Login !== isLoginen) setIsLogin(true)
   const Logout = (event) => {
     localStorage.removeItem('token')
     window.location.reload()
   }
 
-  //if (useMediaQuery('(min-width:1024px)')){
   return (
     <Container>
       <a href="/">
@@ -59,16 +48,5 @@ export const NavMenu = () => {
       }
     </Container>
   )
-  // }else{
-  //     return (
-  //       <AppBar>
-  //         <Toolbar>
-  //         <IconButton edge="start" color="inherit" aria-label="menu">
-  //            <MenuIcon />
-  //         </IconButton>
-  //         </Toolbar>
-  //       </AppBar>
-  //     )
-  //}
 }
 

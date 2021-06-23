@@ -18,7 +18,7 @@ piece.black.pawn{
     background-image: url('img/p_.svg');
 }
 piece.black.rook{
-    background-image: url('img/r_.svg')
+    background-image: url('img/r_.svg');
 }
 piece.black.knight{
     background-image: url('img/n_.svg');

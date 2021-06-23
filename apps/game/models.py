@@ -6,12 +6,12 @@ from apps.users.models import SocialUser
 
 class Game(models.Model):
     chess_variants = [
-        (0, 'Классические'),
-        (1, 'Фишера'),
-        (2, 'Инь-Ян'),
-        (3, 'Фланговая'),
-        (4, 'Инь-ян / Фланговая'),
-        (5, 'Инь-ян / Фибоначчи'),
+        (1, 'Инь-Ян'),
+        (2, 'Фланговая'),
+        (3, 'Инь-ян / Фланговая'),
+        (4, 'Инь-ян / Фибоначчи'),
+        (15, 'Классические'),
+        (16, 'Фишера'),
     ]
 
     chess_variant = models.CharField(max_length=1, choices=chess_variants, default=1, verbose_name='Шахматный вариант')

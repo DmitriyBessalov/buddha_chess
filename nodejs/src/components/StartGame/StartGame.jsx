@@ -23,7 +23,7 @@ ws()
 
 
 export const StartGame = () => {
-  const [gameList, setGameList] = React.useState({})
+  const [gameList, setGameList] = useState({})
 
   useEffect(() => {
     console.log('useEffect')
@@ -49,6 +49,8 @@ export const StartGame = () => {
           websocket.close()
           setTimeout(ws, 1000)
           setTimeout(ws_init, 1600)
+          break
+        default:
       }
     }
     if (websocket.readyState !== 1)
@@ -74,7 +76,9 @@ export const StartGame = () => {
           sessionStorage.setItem("game_id_" + message.game_id, JSON.stringify(message))
           window.location.replace('/ru/партия/' + message.game_id)
         }
+        break
       }
+      default:
     }
     if (((message.cmd === "list_games") || (message.cmd === "join_game"))) {
       setGameList(message.list_games)
@@ -106,12 +110,12 @@ let rmGame = (_id) => {
 }
 
 const chess_variant = {
-  "0": "Класические",
-  "1": "Фишера 960",
-  "2": "Инь-ян",
-  "3": "Фланговая",
-  "4": "Инь-ян / Фланговая",
-  "5": "Инь-ян / Фибоначчи",
+  "1": "Инь-ян",
+  "2": "Фланговая",
+  "3": "Инь-ян / Фланговая",
+  "4": "Инь-ян / Фибоначчи",
+  "15": "Класические",
+  "16": "Фишера 960",
 }
 
 const color = {
