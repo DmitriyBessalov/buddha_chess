@@ -65,7 +65,7 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
                              "anonimous_username": self.scope["user"].username,
                              "anonimous_jwt": self.scope["user"].anonimous_jwt
                              }
-                r.set('anonimous_' + self.scope["user"].anonimous_jwt, self.scope["user"].username, ex=2635200)
+                r.set('anonimous_' + self.scope["user"].anonimous_jwt, self.scope["user"].username, ex=550000)
                 await self.send(text_data=json.dumps(send_data))
 
         _send_data = {"cmd": "error"}
@@ -83,7 +83,7 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
                 "chess_variant": ws_json['chess_variant'],
                 "color": ws_json['color'],
                 "user": self.scope["user"].username,
-            }), ex=20)
+            }), ex=600)
             ws_json['cmd'] = "show_games"
 
         if ws_json['cmd'] == 'join_game':
@@ -107,7 +107,12 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
                     _send_data["rival_black"] = game['user']
                     _send_data["rival_white"] = self.scope["user"].username
 
-        if ws_json['cmd'] == 'show_games':
+                for key in r.keys('game_*'):
+                    k = ast.literal_eval(r.get(key).decode("utf-8"))
+                    if k['user'] == _send_data["rival_black"] or k['user'] == _send_data["rival_white"]:
+                        r.delete("game_" + str(k["game_id"]))
+
+        if ws_json['cmd'] == 'show_games' or ws_json['cmd'] == 'join_game':
             data = ''
 
             for key in r.keys('game_*'):
@@ -118,9 +123,9 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
             if data == '':
                 data = '[]'
 
-            _send_data = {"cmd": "list_games",
-                          "list_games": ast.literal_eval(data)
-                          }
+            if ws_json['cmd'] == 'show_games':
+                _send_data["cmd"] = "list_games"
+            _send_data["list_games"] = ast.literal_eval(data)
 
         if ws_json['cmd'] == 'move':
             _send_data = {"cmd": "move",
