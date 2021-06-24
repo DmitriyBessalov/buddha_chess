@@ -8,7 +8,7 @@ import {Article} from "./components/Article/Article";
 import {Game} from "./components/Game/Game";
 import {StartGame} from "./components/StartGame/StartGame";
 import {StylesProvider} from "@material-ui/core/styles";
-import {frontend, web_protocol} from "./components/conf";
+import {backend, frontend, web_protocol, ws_protocol} from "./components/conf";
 
 export const Logined = React.createContext()
 

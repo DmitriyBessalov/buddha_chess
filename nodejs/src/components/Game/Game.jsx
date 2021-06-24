@@ -1,68 +1,74 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {chess960} from './chess960_start_position'
 import classes from './Game.css'
+import {backend, ws_protocol} from "../conf";
 
 export const Game = () => {
-  let game = JSON.parse(sessionStorage.getItem("game_id_" + document.location.pathname.split('/')[3])),
-    board,
-    board_path_top,
-    board_path_bottom,
-    board_style,
-    board_scale,
-    board_size,
-    board_position,
-    FEN,
-    color,
-    current_move_color,
-    mouse_position_dragstart = {},
-    mouse_position_dragover = {},
-    mouse_position_old_dragover = {},
-    mouse_position_dragend = {},
-    board_position_top,
-    board_rotate = "",
-    moves
+  useEffect(() => {
+    let game = JSON.parse(sessionStorage.getItem("game_id_" + document.location.pathname.split('/')[3])),
+      board,
+      board_path_top,
+      board_path_bottom,
+      board_style,
+      board_scale,
+      board_size,
+      board_position,
+      FEN,
+      color,
+      color_current_move = true,
+      color_current_move_old = true,
+      mouse_position_dragstart = {},
+      mouse_position_dragover = {},
+      mouse_position_old_dragover = {},
+      mouse_position_dragend = {},
+      board_position_top,
+      board_rotate = "",
+      move = 0,
+      moves
 
-  if (game.rival_white === localStorage.getItem("email") || game.rival_white === sessionStorage.getItem("anonimous_username")) {
-    color = "white"
-  } else if (game.rival_black === localStorage.getItem("email") || game.rival_black === sessionStorage.getItem("anonimous_username")) {
-    color = "black"
-  }
-  console.log(game, color)
 
-  switch (game.chess_variant) {
-    case "1":
-      FEN = "rbnKEnqr/pppbpppp/8/8/8/8/PPPBPPPP/RBNkeNQR w - - 0 1"
-      moves = "f2f3a7a5g1f2b8a7e2e3b7b6c2c3e7e5f1g3b6b5c1d3f7f6b2b4a5b4d3b4a7c5d8c7c5b4c3b4d7e6c7b7a8a2a1a2e6a2b1a2g8a2b7c8d1c2g3e4f6f5e4c5a2c4e3e4c4b4f2e3b4d2e3d2e1d2c8c7d2a5c7d6f8g6e8e6h8d8c5d7a5a6d6c5d8c8c5d5g6f4d5e5f4e6e5f5e6d4f5f4a6d6f4e3c8c3e3f2d6d7h1e1b5b4e4e5d7f5e5e6d4e6e1e2c2d3e2e3d3c4e3e4c4b3e4e1f5c5f2f1c3e3e1b1b3a2b1d1c5c4f1f2c4e2f2g3e2d1h2h3g7g5g3g4h7h6h3h4d1d4g4g3d4h4"
-      break
-    case "2":
-      FEN = "rhntknhr/pppbbppp/8/8/8/8/PPPBBPPP/RHNTKNHR w - - 0 1"
-      moves = "h2h4h7h5f1g3g7g6b2b4c7c5c1d3f8e6a2a4b7b5b1b3c5c4b3c4b5c4d3f4e6f4d2f4e7b4c2c3b4a5f4g5d8e6e2c4e6c5d1b2g8g7g5d2c8d6c4e2f7f5f2f400g3f1b8b6f1e3a7a6g2g3c5e6g1g2b6b5a4b5a6b5b2d3f8c8e3c2d6c400c4d2d3d2a5c3d2b3c3a1c2a1c8b8a1c2a8a4f1a1a4a1c2a1b5b4a1c2d7b5e2b5b8b5c2b4e6d6b3a4b5b8a4a5b8a8a5b6a8a1g1f2a1b1b6a5d6c5b4a6c5d3f2f3d3d2f3f2b1e1g3g4d2e2"
-      break
-    case "3":
-      FEN = "rtpKEbnr/pppbnppp/8/8/8/8/PPPBNPPP/RTPkeBNR w - - 0 1"
-      moves = "h2h3b7b6g2g4d7b5a2a4b5c6b2b4f7f5e2g3g7g6c2c4a7a6b4b5a6b5c4b5c6d7g4f5g6f5h3h4e7g6f1h3f5f4g3h5c7c6b5c6d7c6h3c8a8a4a1a4c6a4h5f4a4c2b1a2g8e7c8h3g6h4a2b4e7g6b4b5f8c5f4e6c2d3b5a4b8a7e6c5b6c5a4c5d3b5c5d6d1c2f2f4h8f8f4f5g6h8d2g5h4f5h3f5c2b3h1h7a7b6d6e7f8f5e7f5b3c4h7h8b5d7f5f6d7a4h8h7c4c5g1e2b6b5g5d2c5d6h7b7b5c5d2b4d6c6b4c5c6b7e2c3a4c5f6e6b7a6e6c7a6a5c7b6"
-      break
-    case "4":
-      FEN = "tcrqhKEbnrag/pppppbnppppp/12/12/12/12/12/12/12/12/PPPPPBNPPPPP/TCRQHkeBNRAG w - - 0 1"
-      moves = "j2j3c11c10i2i4d11d10l1j2j11j10k1i2i11i9c2c3a12c11a1c2c10c8c3c5b12c10i2h4k12i10g2f4l12j11h1f3j11h10e2e3g11f9f3l11j10j9h4i10h11i10f2i9h10j11d1i10d10d9i10j9h12i11i9f2d12d11j2h3e11e9f4g2f9h10j9j4f1e2g2h4j11h12j4i3c10c2c1c2e2d3c2c1d9d4e3d4e9d4h4f3d3e4h3i9h10j11i3g3j11i9g3i9i11j10i9j4e4f3f2j10j12j10j4i9f3e4i1h3e4e9i9h4j10h10h4i3h10h3i3h3d11h3g12f11c11d11f11d11e12d11f12e11h3e10"
-      break
-    case "15":
-      FEN = chess960[518]
-      break
-    case "16":
-      const _start = Math.floor(Math.random() * 960)
-      console.log('position 960:', _start)
-      FEN = chess960[_start]
-  }
+    window.websocket = new WebSocket(ws_protocol + backend + '/ws/games?' + game.game_id)
 
-  const init = () => {
+    if (!game) {
+      window.location.replace('/')
+    } else if (game.rival_white === localStorage.getItem("email") || game.rival_white === sessionStorage.getItem("anonimous_username")) {
+      color = true
+    } else if (game.rival_black === localStorage.getItem("email") || game.rival_black === sessionStorage.getItem("anonimous_username")) {
+      color = false
+    }
+    console.log(game, color)
+
+    switch (game.chess_variant) {
+      case "1":
+        FEN = "rbnKEnqr/pppbpppp/8/8/8/8/PPPBPPPP/RBNkeNQR w - - 0 1"
+        moves = "f2f3a7a5g1f2b8a7e2e3b7b6c2c3e7e5f1g3b6b5c1d3f7f6b2b4a5b4d3b4a7c5d8c7c5b4c3b4d7e6c7b7a8a2a1a2e6a2b1a2g8a2b7c8d1c2g3e4f6f5e4c5a2c4e3e4c4b4f2e3b4d2e3d2e1d2c8c7d2a5c7d6f8g6e8e6h8d8c5d7a5a6d6c5d8c8c5d5g6f4d5e5f4e6e5f5e6d4f5f4a6d6f4e3c8c3e3f2d6d7h1e1b5b4e4e5d7f5e5e6d4e6e1e2c2d3e2e3d3c4e3e4c4b3e4e1f5c5f2f1c3e3e1b1b3a2b1d1c5c4f1f2c4e2f2g3e2d1h2h3g7g5g3g4h7h6h3h4d1d4g4g3d4h4"
+        break
+      case "2":
+        FEN = "rhntknhr/pppbbppp/8/8/8/8/PPPBBPPP/RHNTKNHR w - - 0 1"
+        moves = "h2h4h7h5f1g3g7g6b2b4c7c5c1d3f8e6a2a4b7b5b1b3c5c4b3c4b5c4d3f4e6f4d2f4e7b4c2c3b4a5f4g5d8e6e2c4e6c5d1b2g8g7g5d2c8d6c4e2f7f5f2f400g3f1b8b6f1e3a7a6g2g3c5e6g1g2b6b5a4b5a6b5b2d3f8c8e3c2d6c400c4d2d3d2a5c3d2b3c3a1c2a1c8b8a1c2a8a4f1a1a4a1c2a1b5b4a1c2d7b5e2b5b8b5c2b4e6d6b3a4b5b8a4a5b8a8a5b6a8a1g1f2a1b1b6a5d6c5b4a6c5d3f2f3d3d2f3f2b1e1g3g4d2e2"
+        break
+      case "3":
+        FEN = "rtpKEbnr/pppbnppp/8/8/8/8/PPPBNPPP/RTPkeBNR w - - 0 1"
+        moves = "h2h3b7b6g2g4d7b5a2a4b5c6b2b4f7f5e2g3g7g6c2c4a7a6b4b5a6b5c4b5c6d7g4f5g6f5h3h4e7g6f1h3f5f4g3h5c7c6b5c6d7c6h3c8a8a4a1a4c6a4h5f4a4c2b1a2g8e7c8h3g6h4a2b4e7g6b4b5f8c5f4e6c2d3b5a4b8a7e6c5b6c5a4c5d3b5c5d6d1c2f2f4h8f8f4f5g6h8d2g5h4f5h3f5c2b3h1h7a7b6d6e7f8f5e7f5b3c4h7h8b5d7f5f6d7a4h8h7c4c5g1e2b6b5g5d2c5d6h7b7b5c5d2b4d6c6b4c5c6b7e2c3a4c5f6e6b7a6e6c7a6a5c7b6"
+        break
+      case "4":
+        FEN = "tcrqhKEbnrag/pppppbnppppp/12/12/12/12/12/12/12/12/PPPPPBNPPPPP/TCRQHkeBNRAG w - - 0 1"
+        moves = "j2j3c11c10i2i4d11d10l1j2j11j10k1i2i11i9c2c3a12c11a1c2c10c8c3c5b12c10i2h4k12i10g2f4l12j11h1f3j11h10e2e3g11f9f3l11j10j9h4i10h11i10f2i9h10j11d1i10d10d9i10j9h12i11i9f2d12d11j2h3e11e9f4g2f9h10j9j4f1e2g2h4j11h12j4i3c10c2c1c2e2d3c2c1d9d4e3d4e9d4h4f3d3e4h3i9h10j11i3g3j11i9g3i9i11j10i9j4e4f3f2j10j12j10j4i9f3e4i1h3e4e9i9h4j10h10h4i3h10h3i3h3d11h3g12f11c11d11f11d11e12d11f12e11h3e10"
+        break
+      case "15":
+        FEN = chess960[518]
+        break
+      case "16":
+        FEN = chess960[game.position_960]
+    }
+
 
     board = document.querySelector(`#board`)
     board_path_top = document.querySelector(`#board_path_top`)
     board_path_bottom = document.querySelector(`#board_path_bottom`)
     board_style = document.querySelector(`#board_style`)
 
-    let create_piece = (code_piece, id, _x, _y) => {
+    const create_piece = (code_piece, id, _x, _y) => {
       //console.log( code_piece, id, _x, _y)
       let div = document.createElement('div')
       div.classList = 'piece_rotate'
@@ -146,20 +152,23 @@ export const Game = () => {
       set_piece_position(div, undefined, undefined, _x, _y, id)
     }
 
-    let remove_piece = () => {
+    const remove_piece = () => {
       let old_piece = document.querySelectorAll("div.remove_piece")
       old_piece.forEach((elem, index) => {
         elem.remove()
       })
     }
 
-    let set_piece_position = (piece, end_x, end_y, _x, _y, id, time_animation = 0,) => {
-      //console.log(_x, _y, piece.id, end_x, end_y, id)
+    const set_piece_position = (piece, end_x, end_y, _x, _y, id, time_animation = 0,) => {
+      //console.log(piece, end_x, end_y, _x, _y, id)
       let old_piece = document.querySelector("#block_" + id)
       if (old_piece) {
         old_piece.className = old_piece.classList + ' remove_piece'
         setTimeout('remove_piece()', 400)
       }
+
+      if (typeof(piece)==="string")
+        piece=document.querySelector("#" + piece)
 
       piece.id = "block_" + id
       if (position_board_path(_y) === "top") {
@@ -174,7 +183,7 @@ export const Game = () => {
     }
 
 
-    let generate_start_position = () => {
+    const generate_start_position = () => {
       if (FEN) {
         let line = FEN.split(" ")[0].split("/")
         line.forEach((value, key) => {
@@ -195,7 +204,7 @@ export const Game = () => {
       }
     }
 
-    let mouse_position = (evt) => {
+    const mouse_position = (evt) => {
       let mouse_pos = {}
       mouse_pos['x'] = (Math.ceil(evt.layerX / (60 * board_scale))) - 1
       mouse_pos['y'] = Math.ceil((evt.y - board_position_top) / (60 * board_scale)) - 1
@@ -207,7 +216,7 @@ export const Game = () => {
       return mouse_pos
     }
 
-    let position_board_path = (mouse_pos_y) => {
+    const position_board_path = (mouse_pos_y) => {
       if (board_size / 2 <= mouse_pos_y) {
         return 'bottom'
       } else {
@@ -216,7 +225,7 @@ export const Game = () => {
     }
 
 
-    let coordinate_shift = (position, shift = false) => {
+    const coordinate_shift = (position, shift = false) => {
       position['shift_x'] = position.x
       position['shift_y'] = position.y
 
@@ -246,18 +255,39 @@ export const Game = () => {
       return position
     }
 
-    let chess_move = (piece, _mouse_position_dragend, _mouse_position_dragstart) => {
+    const change_color = () => {
+      if (color === color_current_move) {
+        document.querySelector(`#board_rotate`).style.pointerEvents = "unset"
+      } else {
+        document.querySelector(`#board_rotate`).style.pointerEvents = "none"
+      }
+    }
+
+    const chess_move = (piece, _mouse_position_dragend, _mouse_position_dragstart) => {
       const cName = piece.querySelector(`piece`).className.split(' ')
       console.log(cName[0], cName[1], _mouse_position_dragstart.view + '-' + _mouse_position_dragend.view)
-      set_piece_position(piece, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragend.view, 1.5)
+      if (_mouse_position_dragstart.view !== _mouse_position_dragend.view) {
+        window.websocket.send('{' +
+          '"cmd":"move",' +
+          '"color":"' + cName[0] + '",' +
+          '"piece":"' + piece.id + '",' +
+          '"start_x":"' + _mouse_position_dragstart.shift_x + '",' +
+          '"start_y":"' + _mouse_position_dragstart.shift_y + '",' +
+          '"end_x":"' + _mouse_position_dragend.shift_x + '",' +
+          '"end_y":"' + _mouse_position_dragend.shift_y + '",' +
+          '"piece_id":"' + _mouse_position_dragend.view + '"' +
+          '}')
+        set_piece_position(piece, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragend.view, 1.5)
+        color_current_move = !color_current_move
+        change_color()
+      }
     }
 
     let movesArray = new Array()
-    let get_start_moves = (moves) => {
+    const get_start_moves = (moves) => {
       const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
       let arr
       while ((arr = regex.exec(moves)) !== null) {
-
         movesArray.push([arr[1], arr[2], arr[3], arr[4]])
       }
 //    console.log(movesArray)
@@ -283,8 +313,8 @@ export const Game = () => {
       chess_move(evt.target, mouse_position_dragend, mouse_position_dragstart)
       evt.target.classList.remove(`dragover`)
     })
-    
-    let rotate = () => {
+
+    const rotate = () => {
       if (!board_rotate) {
         board_rotate = "-"
       } else {
@@ -305,7 +335,7 @@ export const Game = () => {
       }
     }
 
-    let size0 = (time = 3) => {
+    const size0 = (time = 3) => {
       board_scale = 1.5
       board_size = 8
       board_position = 0
@@ -404,7 +434,7 @@ export const Game = () => {
           "}" + _style
     }
 
-    let size1 = (time) => {
+    const size1 = (time) => {
       size0(time)
       board_position = 1
       if (board_style)
@@ -414,7 +444,7 @@ export const Game = () => {
           "}"
     }
 
-    let size2 = (time) => {
+    const size2 = (time) => {
       board_scale = 1.2
       board_size = 10
       board_position = 2
@@ -476,7 +506,7 @@ export const Game = () => {
           "}" + _style
     }
 
-    let size3 = (time) => {
+    const size3 = (time) => {
       board_scale = 1
       board_size = 12
       board_position = 3
@@ -541,6 +571,8 @@ export const Game = () => {
 
     if (game.chess_variant === '4') {
       size3(0)
+      if (color === false)
+        rotate()
       generate_start_position()
       setTimeout(size0, 3000)
     } else {
@@ -548,12 +580,12 @@ export const Game = () => {
         size1(0)
       else
         size0(0)
+      if (color === false)
+        rotate()
       generate_start_position()
     }
-    get_start_moves(moves)
-
-
-    let new_board_position = board_position
+    //get_start_moves(moves)
+    change_color()
 
     const fibonacci = (move) => {
       const fib = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025]
@@ -603,7 +635,7 @@ export const Game = () => {
       }
     }
 
-    let coordinate_shift_from_view = (x, y) => {
+    const coordinate_shift_from_view = (x, y) => {
       let position = {}
       position['x'] = x.charCodeAt(0) - 99
 
@@ -620,22 +652,70 @@ export const Game = () => {
       return (position)
     }
 
-    let _move = 0
-    let detour_moves = () => {
-      if (movesArray[_move]) {
-        const piece = document.querySelector(`#block_` + movesArray[_move][0] + movesArray[_move][1])
-        let position_start = coordinate_shift_from_view(movesArray[_move][0], movesArray[_move][1])
-        let position_end = coordinate_shift_from_view(movesArray[_move][2], movesArray[_move][3])
-        //console.log(position_start, position_end)
-        set_piece_position(piece, position_start.shift_x, position_start.shift_y, position_end.shift_x, position_end.shift_y, position_end.view)
-        //console.log(piece, movesArray[_move])
-        //setTimeout("detour_moves()",1000)
-        next_move(_move)
-        _move++
+    // let _move = 0
+    // let detour_moves = () => {
+    //   if (movesArray[_move]) {
+    //     const piece = document.querySelector(`#block_` + movesArray[_move][0] + movesArray[_move][1])
+    //     let position_start = coordinate_shift_from_view(movesArray[_move][0], movesArray[_move][1])
+    //     let position_end = coordinate_shift_from_view(movesArray[_move][2], movesArray[_move][3])
+    //     //console.log(position_start, position_end)
+    //     set_piece_position(piece, position_start.shift_x, position_start.shift_y, position_end.shift_x, position_end.shift_y, position_end.view)
+    //     //console.log(piece, movesArray[_move])
+    //     //setTimeout("detour_moves()",1000)
+    //     next_move(_move)
+    //     _move++
+    //   }
+    // }
+
+
+    const ws_init = () => {
+      //console.log(websocket.readyState)
+      switch (window.websocket.readyState) {
+        case 0:
+          setTimeout(ws_init, 500)
+          break
+        case 1:
+          let values = {}
+          values['cmd'] = "connect_game"
+          values['jwt'] = localStorage.getItem("jwt")
+          values['anonimous_jwt'] = sessionStorage.getItem("anonimous_jwt")
+          values['game_id'] = game['game_id']
+          console.log(JSON.stringify(values))
+          window.websocket.send(JSON.stringify(values))
+          window.websocket.onclose = () => {
+            ws_init()
+          }
+          break
+        case 2:
+        case 3:
+          window.websocket.close()
+          setTimeout(ws_init, 1600)
+          break
+        default:
+      }
+      window.websocket.onmessage = function (e) {
+        let message = JSON.parse(e.data)
+        console.log(message)
+        if (message.cmd === "move") {
+          if (color_current_move===color_current_move_old){
+            set_piece_position(message.piece, message.start_x, message.start_y, message.end_x, message.end_y, message.piece_id, 1.5)
+            color_current_move_old=color_current_move=!color_current_move
+          }else{
+            color_current_move_old=color_current_move
+          }
+          change_color()
+          const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
+          let arr = regex.exec(message.piece + message.piece_id)
+          movesArray.push([arr[1], arr[2], arr[3], arr[4]])
+          next_move(move++)
+        }
       }
     }
-  }
-  setTimeout(init, 500)
+    if (window.websocket.readyState !== 1)
+      setTimeout(ws_init, 1000)
+
+
+  }, [])
 
 
   return (
