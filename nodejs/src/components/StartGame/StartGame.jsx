@@ -115,8 +115,8 @@ export const StartGame = () => {
 
   const color = {
     "random": "Любой",
-    "while": "Белый",
-    "black": "Черный",
+    "black": "Белый",
+    "while": "Черный",
   }
 
 

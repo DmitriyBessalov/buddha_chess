@@ -37,12 +37,10 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
                 r.delete("game_" + str(k["game_id"]))
         await self.receive('{"cmd":"disconnect"}')
 
-
     @database_sync_to_async
     def get_user(self, jwt):
         try:
-            user = Token.objects.get(key=jwt)
-            return SocialUser.objects.get(pk=user.user_id)
+            return Token.objects.select_related().get(key=jwt).user
         except Token.DoesNotExist:
             return AnonymousUser()
 

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {chess960} from './chess960_start_position'
 import classes from './Game.css'
-import {backend, ws_protocol} from "../conf";
+import {backend, ws_protocol} from "../conf"
 
 export const Game = () => {
   useEffect(() => {
@@ -167,8 +167,8 @@ export const Game = () => {
         setTimeout('remove_piece()', 400)
       }
 
-      if (typeof(piece)==="string")
-        piece=document.querySelector("#" + piece)
+      if (typeof (piece) === "string")
+        piece = document.querySelector("#" + piece)
 
       piece.id = "block_" + id
       if (position_board_path(_y) === "top") {
@@ -208,7 +208,6 @@ export const Game = () => {
       let mouse_pos = {}
       mouse_pos['x'] = (Math.ceil(evt.layerX / (60 * board_scale))) - 1
       mouse_pos['y'] = Math.ceil((evt.y - board_position_top) / (60 * board_scale)) - 1
-
       if (board_rotate) {
         mouse_pos.x = board_size - mouse_pos['x'] - 1
         mouse_pos.y = board_size - mouse_pos['y'] - 1
@@ -266,7 +265,9 @@ export const Game = () => {
     const chess_move = (piece, _mouse_position_dragend, _mouse_position_dragstart) => {
       const cName = piece.querySelector(`piece`).className.split(' ')
       console.log(cName[0], cName[1], _mouse_position_dragstart.view + '-' + _mouse_position_dragend.view)
-      if (_mouse_position_dragstart.view !== _mouse_position_dragend.view) {
+      if ((((cName[0] === "white") && (color === true)) ||
+        ((cName[0] === "black") && (color === false))) &&
+        (_mouse_position_dragstart.view !== _mouse_position_dragend.view)) {
         window.websocket.send('{' +
           '"cmd":"move",' +
           '"color":"' + cName[0] + '",' +
@@ -309,8 +310,11 @@ export const Game = () => {
     })
 
     board.addEventListener(`dragend`, (evt) => {
-      mouse_position_dragend = coordinate_shift(mouse_position(evt))
-      chess_move(evt.target, mouse_position_dragend, mouse_position_dragstart)
+      const check = mouse_position(evt)
+      if ((check.x >= 0) && (check.y >= 0) && (check.x < board_size) && (check.y < board_size)) {
+        mouse_position_dragend = coordinate_shift(mouse_position(evt))
+        chess_move(evt.target, mouse_position_dragend, mouse_position_dragstart)
+      }
       evt.target.classList.remove(`dragover`)
     })
 
@@ -695,13 +699,13 @@ export const Game = () => {
       }
       window.websocket.onmessage = function (e) {
         let message = JSON.parse(e.data)
-        console.log(message)
+        console.log(e.data)
         if (message.cmd === "move") {
-          if (color_current_move===color_current_move_old){
+          if (color_current_move === color_current_move_old) {
             set_piece_position(message.piece, message.start_x, message.start_y, message.end_x, message.end_y, message.piece_id, 1.5)
-            color_current_move_old=color_current_move=!color_current_move
-          }else{
-            color_current_move_old=color_current_move
+            color_current_move_old = color_current_move = !color_current_move
+          } else {
+            color_current_move_old = color_current_move
           }
           change_color()
           const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
