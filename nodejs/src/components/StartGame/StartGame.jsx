@@ -115,8 +115,8 @@ export const StartGame = () => {
 
   const color = {
     "random": "Любой",
-    "black": "Белый",
-    "while": "Черный",
+    "while": "Белый",
+    "black": "Черный",
   }
 
 
@@ -157,8 +157,8 @@ export const StartGame = () => {
                           onChange={formik.handleChange}
                   >
                     <option value="random">Любой</option>
-                    <option value="while">Белые</option>
-                    <option value="black">Черные</option>
+                    <option value="black">Белые</option>
+                    <option value="while">Черные</option>
                   </Select>
                 </FormControl>
                 <Button variant="contained" type="submit"
