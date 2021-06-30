@@ -15,13 +15,12 @@ django-cors-headers = "^3.7.0"
 django-rest-swagger = "^2.2.0"
 python-dotenv = "^0.17.0"
 psycopg2-binary = "^2.8.6"
-daphne = "^3.0.1"
 django-ninja = "^0.12.2"
 orjson = "^3.5.2"
 channels = "^3.0.3"
 channels-redis = "^3.2.0"
 redis = "^3.5.3"
-
+daphne = "^3.0.2"
 [tool.poetry.dev-dependencies]
 
 [build-system]

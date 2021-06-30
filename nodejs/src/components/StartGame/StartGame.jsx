@@ -87,7 +87,7 @@ export const StartGame = () => {
   const formik = useFormik({
     initialValues: {
       chess_variant: "1",
-      color: 'while',
+      color: 'white',
     },
     onSubmit: (values) => {
       values['cmd'] = "create_game"
@@ -115,8 +115,8 @@ export const StartGame = () => {
 
   const color = {
     "random": "Любой",
-    "while": "Белый",
-    "black": "Черный",
+    "black": "Белый",
+    "white": "Черный",
   }
 
 
@@ -157,8 +157,8 @@ export const StartGame = () => {
                           onChange={formik.handleChange}
                   >
                     <option value="random">Любой</option>
-                    <option value="black">Белые</option>
-                    <option value="while">Черные</option>
+                    <option value="white">Белые</option>
+                    <option value="black">Черные</option>
                   </Select>
                 </FormControl>
                 <Button variant="contained" type="submit"

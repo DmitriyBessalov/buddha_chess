@@ -16,14 +16,13 @@ export const Game = () => {
       FEN,
       color,
       color_current_move = true,
-      color_current_move_old = true,
       mouse_position_dragstart = {},
       mouse_position_dragover = {},
       mouse_position_old_dragover = {},
       mouse_position_dragend = {},
       board_position_top,
       board_rotate = "",
-      move = 0,
+      move = -1,
       moves
 
 
@@ -168,7 +167,7 @@ export const Game = () => {
       }
 
       if (typeof (piece) === "string")
-        piece = document.querySelector("#" + piece)
+        piece = document.querySelector("#block_" + piece)
 
       piece.id = "block_" + id
       if (position_board_path(_y) === "top") {
@@ -254,12 +253,35 @@ export const Game = () => {
       return position
     }
 
-    const change_color = () => {
-      if (color === color_current_move) {
-        document.querySelector(`#board_rotate`).style.pointerEvents = "unset"
-      } else {
+    const color_block = () => {
+      if (Boolean(move%2) !== color){
         document.querySelector(`#board_rotate`).style.pointerEvents = "none"
+      } else {
+        document.querySelector(`#board_rotate`).style.pointerEvents = "unset"
       }
+      color_current_move=Boolean(move%2)
+    }
+
+
+    let movesArray = new Array()
+//     const get_start_moves = (moves) => {
+//       const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
+//       let arr
+//       while ((arr = regex.exec(moves)) !== null) {
+//         movesArray.push([arr[1], arr[2], arr[3], arr[4]])
+//       }
+// //    console.log(movesArray)
+//     }
+
+    const mov=(r,t)=>{
+      const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g
+        let arr = regex.exec(r)
+        const s = coordinate_shift_from_view(arr[1],arr[2])
+        const e = coordinate_shift_from_view(arr[3],arr[4])
+        set_piece_position(arr[1]+arr[2], s.shift_x, s.shift_y, e.shift_x, e.shift_y,  arr[3]+arr[4], t)
+        movesArray.push([arr[1], arr[2], arr[3], arr[4]])
+        next_move(move)
+        color_block()
     }
 
     const chess_move = (piece, _mouse_position_dragend, _mouse_position_dragstart) => {
@@ -268,31 +290,18 @@ export const Game = () => {
       if ((((cName[0] === "white") && (color === true)) ||
         ((cName[0] === "black") && (color === false))) &&
         (_mouse_position_dragstart.view !== _mouse_position_dragend.view)) {
+
         window.websocket.send('{' +
           '"cmd":"move",' +
-          '"color":"' + cName[0] + '",' +
-          '"piece":"' + piece.id + '",' +
-          '"start_x":"' + _mouse_position_dragstart.shift_x + '",' +
-          '"start_y":"' + _mouse_position_dragstart.shift_y + '",' +
-          '"end_x":"' + _mouse_position_dragend.shift_x + '",' +
-          '"end_y":"' + _mouse_position_dragend.shift_y + '",' +
-          '"piece_id":"' + _mouse_position_dragend.view + '"' +
+          '"move_num":"' + movesArray.length + '",' +
+          '"move":"' + piece.id.substr(6) + _mouse_position_dragend.view + '"' +
           '}')
-        set_piece_position(piece, _mouse_position_dragstart.shift_x, _mouse_position_dragstart.shift_y, _mouse_position_dragend.shift_x, _mouse_position_dragend.shift_y, _mouse_position_dragend.view, 1.5)
-        color_current_move = !color_current_move
-        change_color()
+        move++
+        mov(_mouse_position_dragstart.view + _mouse_position_dragend.view, 0)
       }
     }
 
-    let movesArray = new Array()
-    const get_start_moves = (moves) => {
-      const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
-      let arr
-      while ((arr = regex.exec(moves)) !== null) {
-        movesArray.push([arr[1], arr[2], arr[3], arr[4]])
-      }
-//    console.log(movesArray)
-    }
+
 
 
     board.addEventListener(`dragstart`, (evt) => {
@@ -589,7 +598,7 @@ export const Game = () => {
       generate_start_position()
     }
     //get_start_moves(moves)
-    change_color()
+    color_block()
 
     const fibonacci = (move) => {
       const fib = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025]
@@ -697,28 +706,21 @@ export const Game = () => {
           break
         default:
       }
+
       window.websocket.onmessage = function (e) {
         let message = JSON.parse(e.data)
         console.log(e.data)
         if (message.cmd === "move") {
-          if (color_current_move === color_current_move_old) {
-            set_piece_position(message.piece, message.start_x, message.start_y, message.end_x, message.end_y, message.piece_id, 1.5)
-            color_current_move_old = color_current_move = !color_current_move
-          } else {
-            color_current_move_old = color_current_move
+          move=parseInt(message.move_num)
+          color_block()
+          if (color_current_move===color){
+            mov(message.move, 1.5)
           }
-          change_color()
-          const regex = /([a-l])(10|11|12|[1-9])([a-l])(10|11|12|[1-9])/g;
-          let arr = regex.exec(message.piece + message.piece_id)
-          movesArray.push([arr[1], arr[2], arr[3], arr[4]])
-          next_move(move++)
         }
       }
     }
     if (window.websocket.readyState !== 1)
       setTimeout(ws_init, 1000)
-
-
   }, [])
 
 

@@ -72,7 +72,7 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
             game_id = randint(100000000, 999999999)
             if ws_json['color'] == "random":
                 if randint(0, 1):
-                    ws_json['color'] = "while"
+                    ws_json['color'] = "white"
                 else:
                     ws_json['color'] = "black"
 
@@ -100,7 +100,7 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
                               "time_start": time.time()
                               }
 
-                if game['color'] == "wrile":
+                if game['color'] == "white":
                     _send_data["rival_white"] = game["user"]
                     _send_data["rival_black"] = self.scope["user"].username
                 else:
@@ -129,13 +129,8 @@ class StartGameConsumer(AsyncJsonWebsocketConsumer):
 
         if ws_json['cmd'] == 'move':
             _send_data = {"cmd": "move",
-                          "color": ws_json['color'],
-                          "piece": ws_json['piece'],
-                          "start_x": ws_json['start_x'],
-                          "start_y": ws_json['start_y'],
-                          "end_x": ws_json['end_x'],
-                          "end_y": ws_json['end_y'],
-                          "piece_id": ws_json['piece_id'],
+                          "move_num": ws_json['move_num'],
+                          "move": ws_json['move'],
                           }
 
         await self.channel_layer.group_send(
