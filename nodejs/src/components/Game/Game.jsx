@@ -163,7 +163,7 @@ export const Game = () => {
       let old_piece = document.querySelector("#block_" + id)
       if (old_piece) {
         old_piece.className = old_piece.classList + ' remove_piece'
-        setTimeout('remove_piece()', 400)
+        setTimeout(remove_piece, 400)
       }
 
       if (typeof (piece) === "string")
